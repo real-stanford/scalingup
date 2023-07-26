@@ -1,0 +1,4 @@
+defaults:
+  - clip_text
+use_last_hidden_state: false
+text_dim: 512

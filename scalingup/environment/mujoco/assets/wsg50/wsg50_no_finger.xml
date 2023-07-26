@@ -1,0 +1,47 @@
+<mujoco model="wsg50">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+    </default>
+
+    <asset>
+        <material name="gripper" rgba="1 1 1 1" reflectance="0" />
+        <mesh name="base" file="meshes/WSG50_110.stl" scale="1.0 1.0 1.0" />
+        <mesh name="guide" file="meshes/GUIDE_WSG50_110.stl" scale="0.001 0.001 0.001" />
+    </asset>
+    <worldbody>
+        <body name="base">
+            <site name="mount" />
+            <geom mesh="base" type="mesh" class="visual" mass="0.5" material="gripper" />
+            <body name="right_finger_guide">
+                <joint name="right_driver_joint" range="0.001 0.055" damping="10"
+                    type="slide" axis="-1 0 0" />
+                <geom mesh="guide" type="mesh" class="visual" mass="0.5" material="gripper" />
+                <site name="right_finger_mount" pos="-0.01 0 0.09" />
+            </body>
+            <body name="left_finger_guide" euler="0 0 3.14">
+                <joint name="left_driver_joint" range="0.001 0.055" damping="10"
+                    type="slide" axis="-1 0 0" />
+                <geom mesh="guide" type="mesh" class="visual" mass="0.5" material="gripper" />
+                <site name="left_finger_mount" pos="-0.01 0 0.09" />
+            </body>
+        </body>
+    </worldbody>
+
+    <equality>
+        <joint joint1="right_driver_joint" joint2="left_driver_joint" polycoef="0 1 0 0 0"
+            solimp="0.95 0.99 0.001" solref="0.005 1" />
+    </equality>
+
+    <actuator>
+        <position name="gripper" kp="100" forcerange="-30 30" ctrlrange="0 0.055"
+            joint="right_driver_joint" />
+    </actuator>
+</mujoco>
+    

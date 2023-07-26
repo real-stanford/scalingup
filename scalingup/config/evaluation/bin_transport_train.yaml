@@ -1,0 +1,44 @@
+defaults:
+  - single_env
+  - _self_
+sampler_config:
+  max_time: 100 # in seconds
+env:
+  _target_: scalingup.environment.mujoco.bin_grasping.TableTopBinGraspingMujocoEnv
+  bin_x_offset: 0.0
+  min_bin_y_dist: 0.22
+  max_bin_y_dist: 0.24
+  obj_x_margin: 0.1
+  obj_y_margin: 0.1
+  bin_z_rot_margin: 0.1
+  asset_paths:
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Dino_5/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Dino_3/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Thomas_Friends_Wooden_Railway_Porter_5JzRhMm3a9o/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Transformers_Age_of_Extinction_Mega_1Step_Bumblebee_Figure/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Animal_Planet_Foam_2Headed_Dragon/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Teenage_Mutant_Ninja_Turtles_Rahzar_Action_Figure/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Breyer_Horse_Of_The_Year_2015/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Android_Figure_Panda/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Air_Hogs_Wind_Flyers_Set_Airplane_Red/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Android_Figure_Orange/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Android_Lego/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/TURBOPROP_AIRPLANE_WITH_PILOT/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Schleich_Therizinosaurus_ln9cruulPqc/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Schleich_S_Bayala_Unicorn_70432/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Schleich_Bald_Eagle/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Schleich_Lion_Action_Figure/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Raccoon/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Squirrel/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Kong_Puppy_Teething_Rubber_Small_Pink/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/SpiderMan_Titan_Hero_12Inch_Action_Figure_oo1qph4wwiW/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Nintendo_Mario_Action_Figure/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Nickelodeon_Teenage_Mutant_Ninja_Turtles_Raphael/model.xml
+
+task_sampler:
+  tasks:
+  - _target_: scalingup.utils.tasks.PutObjInContainer
+    obj_link_path: toy/|toy/toy
+    container_link_path: left_bin/|left_bin/left_bin
+    require_close: false
+    desc_template: move the toy into the left bin

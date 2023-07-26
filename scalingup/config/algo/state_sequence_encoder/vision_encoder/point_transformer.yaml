@@ -1,0 +1,10 @@
+defaults:
+  - point_cloud
+  - _self_
+
+_target_: scalingup.algo.state_encoder.point_transformer.PointTransformerEncoder
+pos_mlp_hidden_dim: 16
+attn_mlp_hidden_mult: 4
+num_neighbors: 128
+num_layers: 3
+output_dim: 1024

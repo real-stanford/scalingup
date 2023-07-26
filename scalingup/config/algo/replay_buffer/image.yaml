@@ -1,0 +1,9 @@
+defaults:
+ - default
+ - _self_
+
+return_images: true
+ # save on I/O
+return_point_clouds: false
+return_occupancies: false
+pos_bounds: null

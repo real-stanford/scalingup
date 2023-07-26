@@ -1,0 +1,9 @@
+_target_: scalingup.algo.conv3d_encoder.Conv3DVolumeEncoder
+in_channels: 3
+output_dim: 512
+f_maps:
+  - 4
+  - 4
+  - 4
+  - 4
+  - 16

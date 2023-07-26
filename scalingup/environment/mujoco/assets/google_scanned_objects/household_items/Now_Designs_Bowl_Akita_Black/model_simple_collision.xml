@@ -1,0 +1,28 @@
+<mujoco model="bowl">
+  <asset>
+    <texture type="2d" name="texture" file="texture.png" />
+    <material name="material_0" texture="texture" specular="0.5" shininess="0.5" />
+    <mesh name="model" file="model.obj" />
+    <mesh name="model_collision_0" file="model000.obj" />
+    <mesh name="model_collision_1" file="model001.obj" />
+    <mesh name="model_collision_2" file="model002.obj" />
+    <mesh name="model_collision_3" file="model003.obj" />
+    <mesh name="model_collision_4" file="model004.obj" />
+    <mesh name="model_collision_5" file="model005.obj" />
+    <mesh name="model_collision_6" file="model006.obj" />
+    <mesh name="model_collision_7" file="model007.obj" />
+  </asset>
+  <worldbody>
+    <body name="bowl">
+      <geom material="material_0" mesh="model" type="mesh" contype="0" conaffinity="0" group="2" />
+      <geom mesh="model_collision_0" type="mesh" group="3" />
+      <geom mesh="model_collision_1" type="mesh" group="3" />
+      <geom mesh="model_collision_2" type="mesh" group="3" />
+      <geom mesh="model_collision_3" type="mesh" group="3" />
+      <geom mesh="model_collision_4" type="mesh" group="3" />
+      <geom mesh="model_collision_5" type="mesh" group="3" />
+      <geom mesh="model_collision_6" type="mesh" group="3" />
+      <geom mesh="model_collision_7" type="mesh" group="3" />
+    </body>
+  </worldbody>
+</mujoco>

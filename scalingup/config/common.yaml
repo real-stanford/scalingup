@@ -1,0 +1,18 @@
+seed: 0
+logdir: scalingup/
+tags: null
+notes: null
+num_processes: 1
+defaults:
+  - ctrl_config: four_hertz
+  - _self_
+  - override hydra/job_logging: custom
+discretizer: null
+obs_cameras:
+ - front
+ - top_down
+ - ur5e/wsg50/d435i/rgb
+main_cam: front # this is used in visibility checker
+obs_dim:
+  - 160
+  - 240

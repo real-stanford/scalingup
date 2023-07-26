@@ -1,0 +1,34 @@
+defaults:
+  - common
+  - task_sampler: uniform
+  - env/config: default
+  - env/domain_rand_config: null
+_target_: scalingup.evaluation.SingleEnvSimEvaluation
+env:
+  _target_: ???
+  override_pos_ctrl_kp: null
+  override_pos_ctrl_force: null
+
+  config: ???
+
+
+  motion_plan_subsampler:
+    _target_: scalingup.utils.core.MotionPlanSubsampler
+    ctrl_config: ${..config.ctrl}
+    min_ctrl_cycles: 1
+    min_speed_ratio: 0.75
+    configs:
+      joint:
+        _target_: scalingup.utils.core.MotionPlanSubsamplerConfig
+        err_threshold: 1e-1
+        max_speed: 0.4 # rad per second
+      ee_pos:
+        _target_: scalingup.utils.core.MotionPlanSubsamplerConfig
+        err_threshold: 1e-2 # meters
+        max_speed: 0.2 # meters per second
+      ee_orn:
+        _target_: scalingup.utils.core.MotionPlanSubsamplerConfig
+        err_threshold: 1e-1 # error
+        max_speed: 1.5 # rad per second
+  discretizer: ${discretizer}
+  visibility_checker_cam_name: ${main_cam}

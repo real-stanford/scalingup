@@ -1,0 +1,28 @@
+<mujoco model="stick">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom group="3" />
+        </default>
+    </default>
+
+    <worldbody>
+        <body name="stick">
+            <freejoint />
+            <!-- main stick -->
+            <geom type="box" size="0.15 0.01 0.01" class="visual" />
+            <geom type="box" size="0.15 0.01 0.01" class="collision" condim="4" friction="0.3 0.2" />
+            <body name="hook" pos="0.14 0.04 0">
+                <!-- head -->
+                <geom type="box" size="0.01 0.03 0.01" class="visual" />
+                <geom type="box" size="0.01 0.03 0.01" class="collision" condim="4"
+                    friction="0.3 0.2" />
+            </body>
+        </body>
+    </worldbody>
+</mujoco>
+    

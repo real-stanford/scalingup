@@ -1,0 +1,18 @@
+<mujoco model="catapult">
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom group="3" condim="1" friction="0.9" />
+        </default>
+    </default>
+    <worldbody>
+        <body name="block1">
+            <freejoint />
+            <geom type="box" size="0.01 0.01 0.01" class="collision" mass="0.01" />
+            <geom type="box" size="0.01 0.01 0.01" class="visual" mass="0" />
+        </body>
+    </worldbody>
+</mujoco>

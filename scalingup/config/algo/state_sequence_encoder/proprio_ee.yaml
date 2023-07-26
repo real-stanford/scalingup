@@ -1,0 +1,5 @@
+proprioception_keys:
+  - end_effector_position
+  - end_effector_orientation
+  - gripper_command
+proprio_dim: 13

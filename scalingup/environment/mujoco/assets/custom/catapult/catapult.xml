@@ -1,0 +1,61 @@
+<mujoco model="catapult">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom group="3" condim="3" friction="0.99" priority="1" />
+        </default>
+    </default>
+    <asset>
+        <material name="material_0" rgba="0.1 0.2 0.1 1" specular="0.0" shininess="0.0" />
+        <material name="material_1" rgba="1.0 0.2 0.2 1" specular="0.0" shininess="0.0" />
+        <material name="material_2" rgba="0.2 0.3 0.2 1" specular="0.0" shininess="0.0" />
+    </asset>
+    <worldbody>
+        <body name="catapult">
+            <geom type="box" size="0.03 0.03 0.015" pos="-0.2 0.225 0" class="collision" />
+            <geom type="box" size="0.03 0.03 0.015" pos="-0.2 0.225 0" class="visual"
+                material="material_0" />
+
+            <body name="button" pos="-0.2 0.225 0.015">
+                <joint name="button_slider" type="slide" range="0 0.01" axis="0 0 -1"
+                    damping="0.01"
+                    springref="0" stiffness="0.05" />
+                <geom type="capsule" size="0.015 0.006" class="collision" mass="0.00001" />
+                <geom type="cylinder" size="0.015 0.02" class="visual" mass="0.0"
+                    material="material_1" />
+                <camera name="button_side_view" pos="-0.08 0.08 0.08" euler="-0.8 -0.6 0" />
+            </body>
+
+            <geom type="box" size="0.015 0.15 0.015" pos="0.045 0.105 0" class="collision" />
+            <geom type="box" size="0.015 0.15 0.015" pos="0.045 0.105 0" class="visual"
+                material="material_0" />
+
+            <geom type="box" size="0.015 0.15 0.015" pos="-0.045 0.105 0" class="collision" />
+            <geom type="box" size="0.015 0.15 0.015" pos="-0.045 0.105 0" class="visual"
+                material="material_0" />
+
+            <geom type="box" size="0.03 0.015 0.015" pos="0.0 -0.03 0" class="collision" />
+            <geom type="box" size="0.03 0.015 0.015" pos="0.0 -0.03 0" class="visual"
+                material="material_0" />
+            <body name="catapult_arm">
+                <joint name="catapult_hinge" damping="4.5" range="0.0 1.0"
+                    type='hinge' ref="0.0" axis="1 0 0" springref="1.0" stiffness="100" />
+                <geom type="box" size="0.03 0.15 0.015" pos="0 0.15 0" class="collision" mass="0" />
+                <geom type="box" size="0.03 0.15 0.015" pos="0 0.15 0" class="visual"
+                    material="material_2" mass="0.5" />
+            </body>
+        </body>
+    </worldbody>
+    <contact>
+        <exclude body1="catapult" body2="button" />
+        <exclude body1="catapult" body2="catapult_arm" />
+    </contact>
+    <equality>
+        <weld name="catapult_trigger" body1="catapult_arm" relpose="0 5 0 0 0 0 0" torquescale="100" />
+    </equality>
+</mujoco>
+    

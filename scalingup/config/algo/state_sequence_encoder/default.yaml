@@ -1,0 +1,18 @@
+_target_: scalingup.algo.state_encoder.state_sequence_encoder.StateSequenceEncoder
+obs_cameras: ${obs_cameras}
+defaults:
+ - vision_encoder: image_robomimic # {image_robomimic, image_resnet}
+ - proprio_ee
+ - clip_cls_text # {clip_text, onehot_text, clip_cls_text}
+ - _self_
+precache_text_descs: []
+# text encoder
+remove_with_statement: true
+should_condition_on_text: true
+task_desc_proj:
+  _target_: torch.nn.Linear
+  in_features: ${..text_dim}
+  out_features: 128
+# this should be specified by text encoder config
+text_dim: ???
+use_one_hot: ???

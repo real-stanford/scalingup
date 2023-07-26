@@ -1,0 +1,5 @@
+defaults:
+  - per_view_image_encoder
+  - _self_
+base_model:
+  _target_: torchvision.models.resnet101

@@ -1,0 +1,11 @@
+should_condition_on_task_metric: True
+policy_task_metric_guidance: 0.1
+task_metric_corrupt_prob: 0.2
+policy_suppress_token: -1.0
+  # since -1 is corrupt token
+  # we are diffusing away from
+  # the average, to get to trajectories
+  # with task metric == 1.0
+replay_buffer:
+  task_metric: dense_success
+  balance_positive_negative: false

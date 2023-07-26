@@ -1,0 +1,13 @@
+_target_: scalingup.utils.core.EnvSamplerConfig
+_convert_: all
+allow_nondeterminism: True
+done_on_success: True
+obs_horizon: 2
+max_time: ??? # let tasks set this
+use_all_subtrajectories: False
+visualization_cam: front
+visualization_fps: 6
+visualization_resolution:
+  - 320
+  - 480
+dump_failed_trajectories: false

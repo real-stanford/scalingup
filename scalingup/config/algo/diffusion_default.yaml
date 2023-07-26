@@ -1,0 +1,6 @@
+defaults:
+ - diffusion_core
+ - diffusion_image # obs space
+ - diffusion_ee_control_6drot # action space:{diffusion_joint_control,diffusion_ee_control, diffusion_ee_control_augmentation}
+ - diffusion_behaviour_clone # objective {diffusion_suppress_negative, diffusion_behaviour_clone, diffusion_classifier_free}
+ - _self_

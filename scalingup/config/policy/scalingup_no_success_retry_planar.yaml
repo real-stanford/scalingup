@@ -1,0 +1,9 @@
+defaults:
+ - scalingup
+ - _self_
+task_tree_inference:
+  retry_until_success: false
+  plan_grounder:
+    action_primitive_mode: true
+    planar_primitive_only: true
+    retry_until_success: false

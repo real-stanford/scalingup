@@ -1,0 +1,19 @@
+_target_: scalingup.algo.end_effector_policy_utils.Discretizer
+min_rot_val: -180.0
+max_rot_val: 180.0
+rotation_resolution: 5.0
+virtual_grid:
+  _target_: scalingup.algo.virtual_grid.VirtualGrid
+  scene_bounds:
+    - - 0.0
+      - -0.8
+      - -0.1
+    - - 0.8
+      - 0.8
+      - 0.7
+  grid_shape:
+   - 75
+   - 150
+   - 75
+  batch_size: ${oc.select:algo.replay_buffer.batch_size,1}
+  reduce_method: mean

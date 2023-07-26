@@ -1,0 +1,24 @@
+<mujoco model="area">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+    </default>
+
+    <asset>
+        <material name="white" rgba="1 1 1 1" reflectance="0" specular="0" shininess="0" />
+    </asset>
+    <worldbody>
+        <body name="area">
+            <geom size="0.05 0.05 0.051" class="visual" type="box"
+                material="white" />
+            <geom size="0.05 0.05 0.051" class="collision" type="box" />
+        </body>
+    </worldbody>
+</mujoco>
+    

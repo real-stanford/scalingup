@@ -1,0 +1,4 @@
+point_feature_dim: ${eval:"3 if ${.use_rgb} else 1"}
+hidden_dim: 8
+num_obs_pts: ${algo.replay_buffer.num_obs_pts}
+use_rgb: False

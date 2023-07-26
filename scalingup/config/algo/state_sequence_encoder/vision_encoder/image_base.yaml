@@ -1,0 +1,22 @@
+_convert_: all
+_target_: scalingup.algo.state_encoder.image_encoder.PerViewImageEncoder
+
+
+# subclasses need to specify transforms, base model class, and output shapes
+transforms: ???
+base_model:
+  _target_: ???
+per_view_output_dim: ???
+
+views: ${obs_cameras}
+output_dim: 128
+channels_last: true
+obs_dim: ${obs_dim} # this is image shape into per-view encoder
+
+resize_obs_dim: # this is image shape into base model
+ - 160
+ - 240
+
+use_spatial_softmax: false
+spatial_softmax_input_shape: null
+spatial_softmax_num_kp: null

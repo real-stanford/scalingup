@@ -1,0 +1,152 @@
+<!-- 
+  made with `drawer_generator.py`
+
+  with open("scalingup/environment/mujoco/assets/custom/small_drawer.xml", "w") as f:
+    f.write(
+        create_drawer(
+            width=0.12,
+            depth=0.14,
+            handle_length=0.03,
+            # depth=0.2915,
+            height_per_drawer=0.06,
+            thickness=0.008,
+        )
+    ) 
+-->
+
+<mujoco model="drawer">
+  <compiler angle="radian" autolimits="true" />
+  <option impratio="10" />
+  <default>
+    <default class="visual">
+      <geom type="mesh" contype="0" conaffinity="0" group="2" />
+    </default>
+    <default class="collision">
+      <geom type="mesh" group="3" />
+    </default>
+  </default>
+
+  <asset>
+    <material name="drawer_material" rgba="0.3 0.2 0.05 1" />
+  </asset>
+  <worldbody>
+    <body name="drawer">
+      <geom size="0.144 0.008 0.212" pos="0 -0.15600000000000003 0.212" class="visual" type="box"
+        material="drawer_material" />
+      <geom size="0.144 0.008 0.212" pos="0 0.15600000000000003 0.212" class="visual" type="box"
+        material="drawer_material" />
+      <geom size="0.144 0.164 0.008" pos="0 0 0.008" class="visual" type="box"
+        material="drawer_material" />
+      <geom size="0.144 0.164 0.008" pos="0 0 0.424" class="visual" type="box"
+        material="drawer_material" />
+      <geom size="0.008 0.164 0.212" pos="-0.136 0 0.212" class="visual" type="box"
+        material="drawer_material" />
+
+
+      <geom size="0.144 0.008 0.212" pos="0 -0.15600000000000003 0.212" class="collision" type="box" />
+      <geom size="0.144 0.008 0.212" pos="0 0.15600000000000003 0.212" class="collision" type="box" />
+      <geom size="0.144 0.164 0.008" pos="0 0 0.008" class="collision" type="box" />
+      <geom size="0.144 0.164 0.008" pos="0 0 0.424" class="collision" type="box" />
+      <geom size="0.008 0.164 0.212" pos="-0.136 0 0.212" class="collision" type="box" />
+
+
+      <body name="bottom_drawer" pos="0.024 0 0.08399999999999999">
+        <joint name="bottom_drawer_slide" type="slide" axis="1 0 0" limited="true" range="0 0.24"
+          damping="50.0" frictionloss="1.0" />
+
+        <!-- bottom -->
+        <geom size="0.12 0.14 0.008" class="visual" type="box" pos="0 0 -0.052"
+          material="drawer_material" />
+        <!-- left and right -->
+        <geom size="0.12 0.008 0.06" class="visual" type="box" pos="0 0.132 0"
+          material="drawer_material" />
+        <geom size="0.12 0.008 0.06" class="visual" type="box" pos="0 -0.132 0"
+          material="drawer_material" />
+        <!-- front and back -->
+        <geom size="0.008 0.14 0.06" class="visual" type="box" pos="0.11199999999999999 0 0"
+          material="drawer_material" />
+        <geom size="0.008 0.14 0.06" class="visual" type="box" pos="-0.11199999999999999 0 0"
+          material="drawer_material" />
+
+        <!-- bottom -->
+        <geom size="0.12 0.14 0.008" class="collision" type="box" pos="0 0 -0.052" />
+        <!-- left and right -->
+        <geom size="0.12 0.008 0.06" class="collision" type="box" pos="0 0.132 0" />
+        <geom size="0.12 0.008 0.06" class="collision" type="box" pos="0 -0.132 0" />
+        <!-- front and back -->
+        <geom size="0.008 0.14 0.06" class="collision" type="box" pos="0.11199999999999999 0 0" />
+        <geom size="0.008 0.14 0.06" class="collision" type="box" pos="-0.11199999999999999 0 0" />
+
+        <body name="bottom_drawer_handle" pos="0.15 0 0" euler="1.57 0 0">
+          <geom size="0.01 0.03" class="visual" type="cylinder" material="drawer_material" />
+          <geom size="0.01 0.03" class="collision" type="cylinder" />
+        </body>
+      </body>
+      <body name="middle_drawer" pos="0.024 0 0.212">
+        <joint name="middle_drawer_slide" type="slide" axis="1 0 0" limited="true" range="0 0.24"
+          damping="50.0" frictionloss="1.0" />
+
+        <!-- bottom -->
+        <geom size="0.12 0.14 0.008" class="visual" type="box" pos="0 0 -0.052"
+          material="drawer_material" />
+        <!-- left and right -->
+        <geom size="0.12 0.008 0.06" class="visual" type="box" pos="0 0.132 0"
+          material="drawer_material" />
+        <geom size="0.12 0.008 0.06" class="visual" type="box" pos="0 -0.132 0"
+          material="drawer_material" />
+        <!-- front and back -->
+        <geom size="0.008 0.14 0.06" class="visual" type="box" pos="0.11199999999999999 0 0"
+          material="drawer_material" />
+        <geom size="0.008 0.14 0.06" class="visual" type="box" pos="-0.11199999999999999 0 0"
+          material="drawer_material" />
+
+        <!-- bottom -->
+        <geom size="0.12 0.14 0.01" class="collision" type="box" pos="0 0 -0.052" />
+        <!-- left and right -->
+        <geom size="0.12 0.01 0.06" class="collision" type="box" pos="0 0.132 0" />
+        <geom size="0.12 0.01 0.06" class="collision" type="box" pos="0 -0.132 0" />
+        <!-- front and back -->
+        <geom size="0.01 0.14 0.06" class="collision" type="box" pos="0.11199999999999999 0 0" />
+        <geom size="0.01 0.14 0.06" class="collision" type="box" pos="-0.11199999999999999 0 0" />
+
+        <body name="middle_drawer_handle" pos="0.15 0 0" euler="1.57 0 0">
+          <geom size="0.01 0.03" class="visual" type="cylinder" material="drawer_material" />
+          <geom size="0.01 0.03" class="collision" type="cylinder" />
+        </body>
+      </body>
+      <body name="top_drawer" pos="0.024 0 0.33999999999999997">
+        <joint name="top_drawer_slide" type="slide" axis="1 0 0" limited="true" range="0 0.24"
+          damping="50.0" frictionloss="1.0" />
+
+        <!-- bottom -->
+        <geom size="0.12 0.14 0.008" class="visual" type="box" pos="0 0 -0.052"
+          material="drawer_material" />
+        <!-- left and right -->
+        <geom size="0.12 0.008 0.06" class="visual" type="box" pos="0 0.132 0"
+          material="drawer_material" />
+        <geom size="0.12 0.008 0.06" class="visual" type="box" pos="0 -0.132 0"
+          material="drawer_material" />
+        <!-- front and back -->
+        <geom size="0.008 0.14 0.06" class="visual" type="box" pos="0.11199999999999999 0 0"
+          material="drawer_material" />
+        <geom size="0.008 0.14 0.06" class="visual" type="box" pos="-0.11199999999999999 0 0"
+          material="drawer_material" />
+
+        <!-- bottom -->
+        <geom size="0.12 0.14 0.008" class="collision" type="box" pos="0 0 -0.052" />
+        <!-- left and right -->
+        <geom size="0.12 0.008 0.06" class="collision" type="box" pos="0 0.132 0" />
+        <geom size="0.12 0.008 0.06" class="collision" type="box" pos="0 -0.132 0" />
+        <!-- front and back -->
+        <geom size="0.008 0.14 0.06" class="collision" type="box" pos="0.11199999999999999 0 0" />
+        <geom size="0.008 0.14 0.06" class="collision" type="box" pos="-0.11199999999999999 0 0" />
+
+        <body name="top_drawer_handle" pos="0.15 0 0" euler="1.57 0 0">
+          <geom size="0.01 0.03" class="visual" type="cylinder" material="drawer_material" />
+          <geom size="0.01 0.03" class="collision" type="cylinder" />
+        </body>
+      </body>
+    </body>
+
+  </worldbody>
+</mujoco>

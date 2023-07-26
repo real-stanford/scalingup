@@ -1,0 +1,16 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v5.0.252375558)
+
+newmtl one_piece_wide_grasp_finray_finger_material
+Kd 1 1 1
+Ke 0 0 0
+illum 1
+map_Kd one_piece_wide_grasp_finray_finger_color.png
+bump one_piece_wide_grasp_finray_finger_normal.png
+map_bump one_piece_wide_grasp_finray_finger_normal.png
+
+newmtl $Material_1
+Kd 1 1 1
+Ke 0 0 0
+illum 1
+

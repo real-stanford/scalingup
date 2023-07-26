@@ -1,0 +1,34 @@
+defaults:
+  - common
+  - algo: diffusion_default # {diffusion_default, tiny_diffusion}
+  - evaluation: ???
+  - _self_
+  # - multigpu
+
+algo:
+  replay_buffer:
+    train_tasks: null
+  use_remote_policy: ${evaluation.remote}
+
+num_processes: 20
+trainer:
+  _target_: pytorch_lightning.Trainer
+  accelerator: 'gpu'
+  devices: 1
+  accumulate_grad_batches: 1
+  precision: 32
+  max_epochs: 10
+  log_every_n_steps: 4
+  benchmark: true
+  fast_dev_run: false # set to true for debugging
+dataset_path: ???
+evaluation:
+  start_episode: 100000 # NOTE make sure data generation never reaches this episode
+  auto_incr_episode_ids: false # evaluate the same episodes over and over again
+  sampler_config:
+    obs_horizon: ${algo.rollout_config.proprio_obs_horizon}
+  eval_criteria: null
+  remote: true
+  ctrl_config: ${algo.ctrl_config}
+
+load_from_path: null

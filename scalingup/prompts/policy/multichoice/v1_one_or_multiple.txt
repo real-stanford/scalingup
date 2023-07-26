@@ -1,0 +1,113 @@
+instructions: 
+given an input task description, the goal is to classify whether the interaction will involve touching only "one" object or "multiple" objects.
+all objects are in a de-activated state (all lights are off, all doors, drawers, cabinets, cupboards, and other containers are closed, etc.). 
+after performing the task, objects should be reset to their de-activated state if possible.
+
+below are some examples:
+#
+task: stack the blocks on the plate
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+reasoning: stacking the blocks involves moving multiple blocks.
+answer: multiple.
+#
+task: move the blue block onto the plate
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+reasoning: moving the blue block only involves touching the blue block.
+answer: one (blue block).
+#
+task: move the yellow block onto the purple block
+scene:
+ - yellow block
+ - purple block
+ - green block
+ - blue block
+ - plate
+reasoning: moving the yellow block only involves touching the yellow block.
+answer: one (yellow block).
+#
+task: with the purple block on the plate, the yellow block on the purple block, move the green block onto the blue block
+scene:
+ - yellow block
+ - purple block
+ - green block
+ - blue block
+ - plate
+reasoning: moving the green block only involves touching the green block.
+answer: one (green block).
+#
+task: push the blue block away from the red block
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+reasoning: pushing the blue block involves only touching the blue block.
+answer: one (blue block).
+#
+task: turn on the lights
+scene:
+ - light switch
+ - ceiling light
+ - wall
+reasoning: flipping the light switch only involves touching the light switch.
+answer: one (light switch).
+#
+task: take the lasagna in the fridge out and heat it up
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+ - lasagna
+reasoning: the fridge and microwave are initially closed, so this involves opening the fridge, grabbing the lasagna, opening the microwave, etc.
+answer: multiple.
+#
+task: move the lasagna in the fridge onto the kitchen counter
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+ - lasagna
+reasoning: the fridge is initially closed, so moving the lasagna involves opening the fridge.
+answer: multiple.
+#
+task: open the microwave
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+ - lasagna
+reasoning: opening the microwave door open involves only touching the microwave.
+answer: one (microwave).
+#
+task: with the microwave door opened, move lasagna to microwave plate
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+ - lasagna
+reasoning: the microwave door is already opened, so moving the lasagna only involves touching the lasagna.
+answer: one (lasagna).

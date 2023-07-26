@@ -1,0 +1,37 @@
+<mujoco model="bin">
+
+    <compiler angle="radian" meshdir="./" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+    </default>
+
+    <asset>
+        <mesh file="real-bin-simplified.obj" name="tote" scale="1 1 1" />
+        <material name="red" rgba="1 0 0 1" />
+        <material name="tote_mat" rgba="0.5 0.5 0.5 1" shininess="1" reflectance="0.0" specular="1" />
+        <material name="tote_bottom_mat" rgba="1 1 1 1" shininess="1" reflectance="0.0"
+            specular="1" />
+    </asset>
+    <worldbody>
+        <body name="bin">
+            <geom mesh="tote" class="visual" material="tote_mat" />
+            <geom type="box" class="visual" size="0.13 0.17 0.001" pos="0 0 0.003"
+                material="tote_bottom_mat" />
+            <geom type="box" size="0.14 0.2 0.02" pos="0 0 -0.0165" group="3" material="red" />
+            <geom type="box" size="0.14 0.015 0.06" pos="0 0.20 0.06" euler="-0.1 0 0" group="3"
+                material="red" />
+            <geom type="box" size="0.14 0.015 0.06" pos="0 -0.20 0.06" euler="0.1 0 0" group="3"
+                material="red" />
+            <geom type="box" size="0.014 0.2 0.06" pos="0.15 0.0 0.06" euler="0 0.15 0" group="3"
+                material="red" />
+            <geom type="box" size="0.014 0.2 0.06" pos="-0.15 0.0 0.06" euler="0 -0.15 0" group="3"
+                material="red" />
+        </body>
+    </worldbody>
+</mujoco>

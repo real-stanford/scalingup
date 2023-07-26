@@ -1,0 +1,7 @@
+_target_: scalingup.utils.core.ControlConfig
+_convert_: all
+frequency: 4
+dof: 10
+control_type: 1 # scalingup.utils.core.ControlType.END_EFFECTOR
+rotation_type: 2 # scalingup.utils.core.RotationType.ROT_MAT
+t_lookahead: 0.0

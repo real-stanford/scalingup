@@ -1,0 +1,111 @@
+instructions:
+given an input task description, the goal is to classify whether performing the task will involve touching only "one" object or "multiple" objects.
+all objects start in a de-activated state (e.g., doors, drawers, cabinets, cupboards, and other containers are closed, lights are off, etc.) unless specified otherwise (e.g., with the door opened).
+after performing the task, objects should be reset to their de-activated state if possible.
+below are some examples:
+#
+task: move the blue block onto the plate
+scene:
+ - green block
+ - blue block
+ - red block
+ - plate
+answer: one.
+#
+task: with the purple block on the plate, move the yellow block onto the green plate
+scene:
+ - yellow block
+ - purple block
+ - plate
+ - green plate
+ - blue block
+answer: one.
+#
+task: stack the blocks on the plate
+scene:
+ - green block
+ - plate
+ - red block
+ - blue block
+answer: multiple.
+#
+task: with the red block on the plate, the orange block on the red block, move the green block onto the pink block
+scene:
+ - orange block
+ - pink block
+ - plate
+ - green block
+ - red block
+answer: one.
+#
+task: take the lasagna in the fridge out and heat it up
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+    + lasagna
+answer: multiple.
+#
+task: open the microwave
+scene:
+ - fridge
+    + fridge door
+       + fridge door handle
+    + lasagna
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+answer: one.
+#
+task: move the lasagna onto the kitchen counter
+scene:
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+    + lasagna
+ - microwave
+    + microwave door
+       + microwave door handle
+answer: multiple.
+#
+task: with the microwave door opened, move lasagna to microwave plate
+scene:
+ - kitchen counter
+ - microwave
+    + microwave door
+       + microwave door handle
+ - fridge
+    + fridge door
+       + fridge door handle
+ - lasagna
+answer: one.
+#
+task: move the lasagna into the fridge
+scene:
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+ - lasagna
+ - microwave
+    + microwave door
+       + microwave door handle
+answer: multiple.
+#
+task: with the fridge door opened, move the lasagna into the fridge
+scene:
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+ - lasagna
+ - microwave
+    + microwave door
+       + microwave door handle
+answer: one.

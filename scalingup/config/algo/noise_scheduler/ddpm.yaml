@@ -1,0 +1,3 @@
+_target_: diffusers.schedulers.scheduling_ddpm.DDPMScheduler
+defaults:
+  - squaredcos_cap_v2

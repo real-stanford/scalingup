@@ -1,0 +1,8 @@
+action_dim: 10
+replay_buffer:
+  control_representation: ee
+  rotation_representation: upper_mat
+ctrl_config:
+  control_type: 1 # scalingup.utils.core.ControlType.END_EFFECTOR
+  rotation_type: 2 # scalingup.utils.core.RotationType.UPPER_ROT_MAT
+  dof: 10

@@ -1,0 +1,2 @@
+_target_: scalingup.utils.core.TaskSampler
+tasks: ${tasks}

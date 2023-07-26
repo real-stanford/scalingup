@@ -1,0 +1,28 @@
+<mujoco model="world">
+    <option impratio="10" />
+    <default>
+        <default class="realsense">
+            <camera fovy="42.5" />
+        </default>
+    </default>
+    <asset>
+        <material name="groundplane" rgba="0.95 0.95 0.95 1" reflectance="0" shininess="0"
+            specular="0" />
+    </asset>
+
+    <visual>
+        <headlight diffuse="0.6 0.6 0.6" ambient="0.6 0.6 0.6" specular="0.6 0.6 0.6" />
+        <global azimuth="120" elevation="-20" offheight="512" />
+    </visual>
+
+    <worldbody>
+        <geom name="floor" size="0 0 0.05" type="plane" material="groundplane" pos="0 0 0" />
+        <camera class="realsense" name="front" pos="1.4 0.0 0.8" xyaxes="0 1.000 0.000 -0.4 0.0 0.8" />
+        <camera class="realsense" name="top_down" pos="0.45 0.0 1.2"
+            euler="0 0 0" />
+        <camera class="realsense" name="front_right" pos="0.925 -1.338 0.862"
+            xyaxes="0.912 0.411 -0.000 -0.169 0.375 0.912" />
+        <camera class="realsense" name="back_left" pos="-0.918 1.927 1.467"
+            xyaxes="-0.799 -0.601 0.000 0.344 -0.457 0.820" />
+    </worldbody>
+</mujoco>

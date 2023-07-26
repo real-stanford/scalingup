@@ -1,0 +1,29 @@
+defaults:
+  - single_env
+  - _self_
+sampler_config:
+  max_time: 60 # in seconds
+env:
+  _target_: scalingup.environment.mujoco.catapult.CatapultMujocoEnv
+  pose_randomization: false
+  end_after_activated_time: 4
+task_sampler:
+  tasks:
+  # - _target_: scalingup.utils.tasks.ActivateObj
+  #   link_path: catapult/|catapult/catapult|catapult/button
+  #   desc: press the button
+  - _target_: scalingup.utils.tasks.PutObjInContainer
+    obj_link_path: yellow_block/|yellow_block/yellow_block
+    container_link_path: closest_box/|closest_box/closest_box
+    require_close: False
+    desc_template: move the block onto the catapult arm, then press the button to shoot the block into the closest box
+  - _target_: scalingup.utils.tasks.PutObjInContainer
+    obj_link_path: yellow_block/|yellow_block/yellow_block
+    container_link_path: middle_box/|middle_box/middle_box
+    require_close: False
+    desc_template: move the block onto the catapult arm, then press the button to shoot the block into the middle box
+  - _target_: scalingup.utils.tasks.PutObjInContainer
+    obj_link_path: yellow_block/|yellow_block/yellow_block
+    container_link_path: furthest_box/|furthest_box/furthest_box
+    require_close: False
+    desc_template: move the block onto the catapult arm, then press the button to shoot the block into the furthest box

@@ -1,0 +1,69 @@
+instructions: given a input task description, the goal is to output a list of subtasks, which, when performed in sequence would solve the input task. all objects start in a de-activated state (e.g., doors, drawers, cabinets, cupboards, and other objects with doors are closed, lights are off, etc.) unless specified otherwise (e.g., with the door opened). after performing the task, objects should be reset to their de-activated state if possible. below are some examples:
+#
+task: move the red block onto the plate, the blue block onto the red block, and the green block on the blue block
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+reasoning: no objects have activation states. the blocks can be directly placed onto the plates.
+answer:
+ - 1. move the red block onto the plate
+ - 2. with the red block on the plate, move the blue block onto the red block
+ - 3. with the red block on the plate and the blue block on the red block, move the green block onto the blue block
+#
+task: move the eggs, salt, and pepper onto the kitchen counter
+scene:
+ - kitchen counter
+    + cupboard
+       + cupboard door
+          + cupboard door handle
+       + salt
+       + pepper
+ - fridge
+    + fridge door
+       + fridge door handle
+    + fridge top shelf
+       + eggs
+       + butter
+       + cheese
+       + milk
+    + fridge bottom shelf
+    + freezer door
+       + freezer door handle
+reasoning: the fridge and cupboard has doors (activation states) which start off closed (de-activated). they need to be opened before objects can be taken out of them. after the task is done, they need to be closed (reset).
+answer:
+ - 1. open the fridge
+ - 2. with the fridge door opened, move the eggs from the fridge onto the kitchen counter
+ - 3. with the eggs on the kitchen counter, close the fridge
+ - 4. with the eggs on the kitchen counter, open the cupboard
+ - 5. with the eggs on the kitchen counter and the cupboard door opened, move the salt onto the kitchen counter
+ - 6. with the eggs and salt on the kitchen counter and the cupboard door opened, move the pepper onto the kitchen counter
+ - 7. with the eggs, salt, and pepper on the kitchen counter, close the cupboard door
+#
+task: with the fridge door opened, move the eggs, salt, and pepper onto the kitchen counter
+scene:
+ - kitchen counter
+    + cupboard
+       + cupboard door
+          + cupboard door handle
+       + salt
+       + pepper
+ - fridge
+    + fridge door
+       + fridge door handle
+    + fridge top shelf
+       + eggs
+       + butter
+       + cheese
+       + milk
+    + fridge bottom shelf
+    + freezer door
+       + freezer door handle
+reasoning: the fridge and cupboard has doors (activation states). the fridge's door is already opened (activated) and so don't need to be reset. the cupboard's door starts off closed (de-activated) but needs to be opened before objects can be taken out of it. after the task is done, the cupboard need to be closed (reset).
+answer:
+ - 1. with the fridge door opened, move the eggs from the fridge onto the kitchen counter
+ - 2. with the fridge door opened and the eggs on the kitchen counter, open the cupboard
+ - 3. with the fridge door opened, the eggs on the kitchen counter, and the cupboard door opened, move the salt onto the kitchen counter
+ - 4. with the fridge door opened, the eggs and salt on the kitchen counter, and the cupboard door opened, move the pepper onto the kitchen counter
+ - 5. with the fridge door opened, the eggs, salt, and pepper on the kitchen counter, close the cupboard door

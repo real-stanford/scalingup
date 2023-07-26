@@ -1,0 +1,3 @@
+_target_: scalingup.policy.buffer_replay.BufferReplayPolicy
+rootdir: ${dataset_path}
+discretizer: ${discretizer}

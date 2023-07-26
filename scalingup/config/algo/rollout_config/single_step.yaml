@@ -1,0 +1,5 @@
+_target_: scalingup.data.window_dataset.PolicyWindowRolloutConfig
+prediction_horizon: 1
+vision_obs_horizon: 1
+proprio_obs_horizon: 1
+action_horizon: 1

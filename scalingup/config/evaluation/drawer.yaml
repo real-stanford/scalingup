@@ -1,0 +1,76 @@
+defaults:
+  - single_env
+  - _self_
+sampler_config:
+  max_time: 120 # in seconds
+env:
+  _target_: scalingup.environment.mujoco.drawer.DrawerMujocoEnv
+  pose_randomization: false
+  position_randomization: true
+task_sampler:
+  _target_: scalingup.utils.core.TaskSampler
+  tasks:
+    # vitamin bottle
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: vitamin bottle/|vitamin bottle/vitamin bottle
+      container_link_path: drawer/|drawer/drawer|drawer/top_drawer
+      require_close: True
+      desc_template: move the vitamin bottle into the top drawer
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: vitamin bottle/|vitamin bottle/vitamin bottle
+      container_link_path: drawer/|drawer/drawer|drawer/middle_drawer
+      require_close: True
+      desc_template: move the vitamin bottle into the middle drawer
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: vitamin bottle/|vitamin bottle/vitamin bottle
+      container_link_path: drawer/|drawer/drawer|drawer/bottom_drawer
+      require_close: True
+      desc_template: move the vitamin bottle into the bottom drawer
+    # purple pencilcase
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: purple pencilcase/|purple pencilcase/purple pencilcase
+      container_link_path: drawer/|drawer/drawer|drawer/top_drawer
+      require_close: True
+      desc_template: move the purple pencilcase into the top drawer
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: purple pencilcase/|purple pencilcase/purple pencilcase
+      container_link_path: drawer/|drawer/drawer|drawer/middle_drawer
+      require_close: True
+      desc_template: move the purple pencilcase into the middle drawer
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: purple pencilcase/|purple pencilcase/purple pencilcase
+      container_link_path: drawer/|drawer/drawer|drawer/bottom_drawer
+      require_close: True
+      desc_template: move the purple pencilcase into the bottom drawer
+    # crayon box
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: crayon box/|crayon box/crayon box
+      container_link_path: drawer/|drawer/drawer|drawer/top_drawer
+      require_close: True
+      desc_template: move the crayon box into the top drawer
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: crayon box/|crayon box/crayon box
+      container_link_path: drawer/|drawer/drawer|drawer/middle_drawer
+      require_close: True
+      desc_template: move the crayon box into the middle drawer
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: crayon box/|crayon box/crayon box
+      container_link_path: drawer/|drawer/drawer|drawer/bottom_drawer
+      require_close: True
+      desc_template: move the crayon box into the bottom drawer
+    # horse toy
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: horse toy/|horse toy/horse toy
+      container_link_path: drawer/|drawer/drawer|drawer/top_drawer
+      require_close: True
+      desc_template: move the horse toy into the top drawer
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: horse toy/|horse toy/horse toy
+      container_link_path: drawer/|drawer/drawer|drawer/middle_drawer
+      require_close: True
+      desc_template: move the horse toy into the middle drawer
+    - _target_: scalingup.utils.tasks.PutObjInContainer
+      obj_link_path: horse toy/|horse toy/horse toy
+      container_link_path: drawer/|drawer/drawer|drawer/bottom_drawer
+      require_close: True
+      desc_template: move the horse toy into the bottom drawer

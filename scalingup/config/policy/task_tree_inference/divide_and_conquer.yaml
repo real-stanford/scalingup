@@ -1,0 +1,69 @@
+defaults:
+  - ../../task_generator@task_generator: factorized
+_target_: scalingup.policy.llm_policy_utils.HierachicalStep
+retry_until_success: ???
+planner:
+  _target_: scalingup.policy.llm_policy_utils.PlannerStep
+  api_config:
+    _target_: scalingup.utils.openai_api.GPT3APIConfig
+    engine: 'text-davinci-003'
+    temperature: 0.0
+    max_tokens: 256
+    _convert_: all
+    stop:
+      - '#'
+  prompt_config:
+    _target_: scalingup.policy.llm_policy_utils.PromptConfig
+    base_prompt: ${eval:'"".join(open("scalingup/prompts/policy/multichoice/v4_subtasks.txt", "r").readlines())'}
+    query_prefix: "#\ntask: "
+    context_suffix: "\nreasoning:"
+ambiguous_task_handler:
+  _target_: scalingup.policy.llm_policy_utils.AmbiguousTaskHandler
+  api_config: ${..planner.api_config}
+  prompt_config:
+    _target_: scalingup.policy.llm_policy_utils.PromptConfig
+    base_prompt: ${eval:'"".join(open("scalingup/prompts/policy/multichoice/v4_ambiguous_handler.txt", "r").readlines())'}
+    query_prefix: "#\ntask: "
+    context_suffix: "\nreasoning:"
+one_or_multiple:
+  _target_: scalingup.policy.llm_policy_utils.OneOrMultipleObj
+  api_config: ${..planner.api_config}
+  prompt_config:
+    _target_: scalingup.utils.openai_api.PromptConfig
+    base_prompt: ${eval:'"".join(open("scalingup/prompts/policy/multichoice/v7_one_or_multiple.txt", "r").readlines())'}
+    query_prefix: "#\ntask: "
+    context_suffix: "\nreasoning: "
+plan_grounder:
+  _target_: scalingup.policy.llm_policy_utils.ExplorationPrimitivePlanGrounder
+  task_generator: ${..task_generator}
+  retry_until_success: ???
+  action_primitive_mode: ???
+  planar_primitive_only: ???
+  obj_part_identifier:
+    _target_: scalingup.policy.llm_policy_utils.ObjectPartIdentifier
+    api_config:
+      _convert_: all
+      _target_: ${....planner.api_config._target_}
+      engine: ${....planner.api_config.engine}
+      temperature: ${....planner.api_config.temperature}
+      max_tokens: 16
+      stop: ${....planner.api_config.stop}
+    prompt_config:
+      _target_: scalingup.policy.llm_policy_utils.PromptConfig
+      base_prompt: ${eval:'"".join(open("scalingup/prompts/policy/multichoice/v1_object_part.txt", "r").readlines())'}
+      query_prefix: "#\ntask: "
+      context_suffix: "\nanswer:"
+  pick_and_place_parser:
+    _target_: scalingup.policy.llm_policy_utils.PickAndPlaceParser
+    api_config:
+      _convert_: all
+      _target_: ${....planner.api_config._target_}
+      engine: ${....planner.api_config.engine}
+      temperature: ${....planner.api_config.temperature}
+      max_tokens: 0
+      stop: ${....planner.api_config.stop}
+    prompt_config:
+      _target_: scalingup.policy.llm_policy_utils.PromptConfig
+      base_prompt: ${eval:'"".join(open("scalingup/prompts/policy/multichoice/v1_pick_place.txt", "r").readlines())'}
+      query_prefix: "#\ntask: "
+      context_suffix: "\npick:"

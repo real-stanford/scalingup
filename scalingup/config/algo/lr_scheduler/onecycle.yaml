@@ -1,0 +1,5 @@
+_target_: torch.optim.lr_scheduler.OneCycleLR
+_partial_: True
+epochs: ${trainer.max_epochs}
+steps_per_epoch: ${algo.replay_buffer.num_steps_per_update}
+max_lr: 3e-4 # for diffusion policy, unstable @ 5e-4

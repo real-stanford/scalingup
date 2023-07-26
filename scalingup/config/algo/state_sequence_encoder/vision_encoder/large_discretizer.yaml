@@ -1,0 +1,16 @@
+defaults:
+  - point_cloud
+  -  ../../../discretizer@discretizer: 128_cubed
+  - _self_
+
+_target_: scalingup.algo.state_encoder.conv3d_encoder.Conv3DVolumeEncoder
+output_dim: 1024
+flattened_dim: 2048
+f_maps:
+ - 4
+ - 8
+ - 16
+ - 32
+ - 64
+ - 128
+ - 256

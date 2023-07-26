@@ -1,0 +1,18 @@
+defaults:
+ - diffusion_ee_control
+replay_buffer:
+  transform_augmentation:
+    _target_: scalingup.data.dataset.TransformAugmentation
+    _convert_: all
+    position_magnitude:
+    - 0.2
+    - 0.2
+    - 0.2
+    orientation_magnitude: # radians
+    - 0.5 # approx 30 degrees
+    - 0.5
+    - 0.5
+    scale_magnitude:
+    - 0.0
+    - 0.0
+    - 0.0

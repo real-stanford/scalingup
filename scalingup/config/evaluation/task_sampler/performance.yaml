@@ -1,0 +1,4 @@
+_target_: scalingup.utils.task_sampler.PerformanceTaskSampler
+tasks: ${tasks}
+performance_tolerance: 0.8
+task_performances: {}

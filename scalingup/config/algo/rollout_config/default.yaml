@@ -1,0 +1,7 @@
+defaults:
+ - _self_
+ - four_actions
+ - two_proprio
+ - one_vision
+_target_: scalingup.data.window_dataset.PolicyWindowRolloutConfig
+prediction_horizon: 16

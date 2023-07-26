@@ -1,0 +1,4 @@
+defaults:
+  - common
+_target_: scalingup.algo.utils.MultiEnvSimEvaluation
+env_task_sampler_pairs: ???

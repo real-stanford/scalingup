@@ -1,0 +1,13 @@
+defaults:
+ - bin_transport_train
+
+env:
+  asset_paths:
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Dino_4/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Android_Figure_Chrome/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Transformers_Age_of_Extinction_Stomp_and_Chomp_Grimlock_Figure/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/BUNNY_RACER/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Sonny_School_Bus/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Schleich_Spinosaurus_Action_Figure/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Schleich_African_Black_Rhino/model.xml
+    - scalingup/environment/mujoco/assets/google_scanned_objects/toys/Nintendo_Yoshi_Action_Figure/model.xml

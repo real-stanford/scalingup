@@ -1,0 +1,7 @@
+defaults:
+ - unet
+ - _self_
+down_dims:
+  - 256
+  - 512
+  - 512

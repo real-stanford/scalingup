@@ -1,0 +1,4 @@
+defaults:
+  - common
+  - evaluation: ???
+  - policy: scalingup

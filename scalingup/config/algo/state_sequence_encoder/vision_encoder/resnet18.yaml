@@ -1,0 +1,5 @@
+defaults:
+  - _self_
+base_model:
+  _target_: torchvision.models.resnet18
+per_view_output_dim: 512

@@ -1,0 +1,12 @@
+_target_: scalingup.policy.scalingup.ScalingUpDataGen
+defaults:
+  - task_tree_inference: divide_and_conquer
+  - _self_
+state_encoder:
+  _target_: scalingup.policy.llm_policy_utils.LanguageStateEncoder
+task_tree_inference:
+  retry_until_success: true
+  plan_grounder:
+    action_primitive_mode: false
+    planar_primitive_only: false
+    retry_until_success: true

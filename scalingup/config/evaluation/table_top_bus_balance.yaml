@@ -1,0 +1,49 @@
+defaults:
+  - single_env
+  - _self_
+sampler_config:
+  max_time: 100 # in seconds
+env:
+  _target_: scalingup.environment.mujoco.table_top_pick_and_place.TableTopPickAndPlace
+  obj_instance_configs:
+    - _target_: scalingup.environment.mujoco.utils.MujocoObjectInstanceConfig
+      _convert_: all
+      obj_class: block
+      asset_path: scalingup/environment/mujoco/assets/custom/block_fixed.xml
+      add_free_joint: false
+      color_config:
+        _target_: scalingup.environment.mujoco.utils.MujocoObjectColorConfig
+        name: red
+        rgb: [1, 0, 0]
+      position: [0.4, 0.3, 0.067]
+      qpos_range: []
+    - _target_: scalingup.environment.mujoco.utils.MujocoObjectInstanceConfig
+      _convert_: all
+      obj_class: bus
+      add_free_joint: true
+      asset_path: scalingup/environment/mujoco/assets/google_scanned_objects/toys/SCHOOL_BUS/model.xml
+      qpos_range:
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0.4
+          lower: 0.4
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0.0
+          lower: 0.0
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0.1
+          lower: 0.1
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 3.14
+          lower: -3.14
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 3.14
+          lower: -3.14
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 3.14
+          lower: -3.14
+task_sampler:
+  tasks:
+  - _target_: scalingup.utils.tasks.PutObjOnAnother
+    on_top_link_path: school bus toy/|school bus toy/school bus toy
+    below_link_path: red_block/|red_block/red_block
+    desc: balance the bus on the block

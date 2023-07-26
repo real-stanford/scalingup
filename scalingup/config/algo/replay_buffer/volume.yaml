@@ -1,0 +1,15 @@
+defaults:
+ - default
+ - _self_
+
+return_point_clouds: true
+return_images: false # save on I/O
+return_occupancies: false
+pos_bounds: ${..state_sequence_encoder.vision_encoder.discretizer.virtual_grid.scene_bounds}
+# orn_bounds:
+#   - - ${....state_sequence_encoder.vision_encoder.discretizer.min_rot_val}
+#     - ${....state_sequence_encoder.vision_encoder.discretizer.min_rot_val}
+#     - ${....state_sequence_encoder.vision_encoder.discretizer.min_rot_val}
+#   - - ${....state_sequence_encoder.vision_encoder.discretizer.max_rot_val}
+#     - ${....state_sequence_encoder.vision_encoder.discretizer.max_rot_val}
+#     - ${....state_sequence_encoder.vision_encoder.discretizer.max_rot_val}

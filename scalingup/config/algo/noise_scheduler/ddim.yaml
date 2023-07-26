@@ -1,0 +1,3 @@
+_target_: diffusers.schedulers.scheduling_ddim.DDIMScheduler
+defaults:
+  - squaredcos_cap_v2

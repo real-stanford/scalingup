@@ -1,0 +1,3 @@
+defaults:
+  - replay_buffer: volume
+  - override state_sequence_encoder/vision_encoder: volume

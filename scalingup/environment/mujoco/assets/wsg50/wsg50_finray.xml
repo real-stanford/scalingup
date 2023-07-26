@@ -1,0 +1,61 @@
+<mujoco model="wsg50">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+        <default class="finray_collision">
+            <geom condim="6" friction="0.8 0.8 0.8" solimp="0.95 0.99 0.001" solref="0.004 1"
+                priority="1" />
+        </default>
+    </default>
+
+    <asset>
+        <material name="gripper" rgba="0.4 0.4 0.4 1" reflectance="0.1" />
+        <mesh name="base" file="meshes/WSG50_110.stl" />
+
+        <texture type="2d" name="texture"
+            file="../finray/one_piece_wide_grasp_finray_finger_color.png" />
+        <material name="finray_material" texture="texture" specular="0.5" shininess="0.0" />
+        <mesh name="finger" file="../finray/one_piece_wide_grasp_finray_finger.obj"
+            scale="0.76923076923 1.0 1.0" />
+        <mesh name="finger_collider" file="../finray/collider.obj" scale="0.76923076923 1.0 1.0" />
+    </asset>
+    <worldbody>
+        <body name="base">
+            <site name="mount" />
+            <geom mesh="base" type="mesh" class="visual" mass="0.5" material="gripper" />
+            <geom size="0.073 0.025 0.036" type="box" class="collision" pos="0 0 0.036" />
+            <body name="right_finger" pos="0 0 0.072" euler="0 0 1.57079632679">
+                <joint name="right_driver_joint" range="0.00 0.054" damping="20"
+                    type="slide" axis="0 -1 0" />
+                <geom mesh="finger" type="mesh" class="visual" mass="0.1" material="finray_material" />
+                <geom mesh="finger_collider" type="mesh" class="finray_collision" />
+                <geom size="0.015 0.01 0.01" type="box" class="collision" pos="0 -0.012 0.0105" />
+            </body>
+            <body name="left_finger" pos="0 0 0.072" euler="0 0 -1.57079632679">
+                <joint name="left_driver_joint" range="0.00 0.054" damping="20"
+                    type="slide" axis="0 -1 0" />
+                <geom mesh="finger" type="mesh" class="visual" mass="0.1" material="finray_material" />
+                <geom mesh="finger_collider" type="mesh" class="finray_collision" />
+                <geom size="0.015 0.01 0.01" type="box" class="collision" pos="0 -0.012 0.0105" />
+            </body>
+            <site name="end_effector" pos="0 0 0.22" />
+        </body>
+    </worldbody>
+
+    <equality>
+        <joint joint1="right_driver_joint" joint2="left_driver_joint" polycoef="0 1 0 0 0"
+            solimp="0.95 0.99 0.001" solref="0.005 1" />
+    </equality>
+
+    <actuator>
+        <position name="gripper" kp="500" forcerange="-30 30" ctrlrange="0 0.055"
+            joint="right_driver_joint" />
+    </actuator>
+</mujoco>
+    

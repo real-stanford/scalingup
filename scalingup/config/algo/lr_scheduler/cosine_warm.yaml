@@ -1,0 +1,3 @@
+_target_: torch.optim.lr_scheduler.CosineAnnealingWarmRestarts
+_partial_: True
+T_0: ${eval:"int(${trainer.max_epochs}*${algo.replay_buffer.num_steps_per_update}/3)"}

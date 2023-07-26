@@ -1,0 +1,24 @@
+<mujoco model="finray_finger">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+    </default>
+
+    <asset>
+        <texture type="2d" name="texture" file="one_piece_wide_grasp_finray_finger_color.png" />
+        <material name="finray_material" texture="texture" specular="0.5" shininess="0.0" />
+        <mesh name="finger" file="one_piece_wide_grasp_finray_finger.obj" scale="1.0 1.0 1.0" />
+    </asset>
+    <worldbody>
+        <body name="base">
+            <geom mesh="finger" type="mesh" class="visual" mass="0.1" material="finray_material" />
+        </body>
+    </worldbody>
+</mujoco>
+    

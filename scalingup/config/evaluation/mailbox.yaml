@@ -1,0 +1,74 @@
+defaults:
+  - single_env
+  - _self_
+sampler_config:
+  max_time: 200 # in seconds
+env:
+  _target_: scalingup.environment.mujoco.table_top.TableTopMujocoEnv
+  obj_instance_configs:
+    - _target_: scalingup.environment.mujoco.utils.MujocoObjectInstanceConfig
+      _convert_: all
+      obj_class: mailbox
+      asset_path: scalingup/environment/mujoco/assets/custom/wall_mailbox/wall_mailbox.xml
+      qpos_range:
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0.0 # closed
+          lower: 0.0 # closed
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0.0
+          lower: 0.0
+      position:
+        - 0.4
+        - -0.1
+        - 0.06
+    - _target_: scalingup.environment.mujoco.utils.MujocoObjectInstanceConfig
+      _convert_: all
+      obj_class: amazon_box
+      asset_path: scalingup/environment/mujoco/assets/sketchfab/amazon_box/amazon_box.xml
+      add_free_joint: true
+      qpos_range:
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0.4
+          lower: 0.5
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0.4
+          lower: 0.3
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0.2
+          lower: 0.2
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0
+          lower: 0
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0
+          lower: 0
+        - _target_: scalingup.utils.core.DegreeOfFreedomRange
+          upper: 0
+          lower: 0
+task_sampler:
+  _target_: scalingup.utils.core.TaskSampler
+  tasks:
+    - _target_: scalingup.utils.tasks.SendMailPackageBack
+      package_link_path: amazon package/|amazon package/amazon package
+      mailbox_link_path: mailbox/|mailbox/mailbox
+      mailbox_flag_link: mailbox/|mailbox/mailbox|mailbox/mailbox_flag
+      desc: send the package for return
+    # - _target_: scalingup.utils.tasks.OpenObj
+    #   link_path: mailbox/|mailbox/mailbox|mailbox/mailbox_lid|mailbox/mailbox_lid_handle
+    #   desc_template: open the mailbox
+    # - _target_: scalingup.utils.tasks.CloseObj
+    #   link_path: mailbox/|mailbox/mailbox|mailbox/mailbox_lid|mailbox/mailbox_lid_handle
+    #   desc_template: close the mailbox
+    # - _target_: scalingup.utils.tasks.PutObjInContainer
+    #   obj_link_path: amazon package/|amazon package/amazon package
+    #   container_link_path: mailbox/|mailbox/mailbox
+    #   require_close: True
+    #   desc_template: send the amazon package for return
+    # - _target_: scalingup.utils.tasks.ActivateObj
+    #   link_path: mailbox/|mailbox/mailbox|mailbox/mailbox_flag
+    #   desc: lift the mailbox flag
+    # - _target_: scalingup.utils.tasks.PutObjInContainer
+    #   obj_link_path: amazon package/|amazon package/amazon package
+    #   container_link_path: mailbox/|mailbox/mailbox
+    #   require_close: False
+    #   desc_template: with the mailbox lid opened, move the amazon package from the table to the mailbox

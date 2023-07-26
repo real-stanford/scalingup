@@ -1,0 +1,11 @@
+defaults:
+ - volume
+output_dim: 64
+flattened_dim: 128
+f_maps:
+ - 2
+ - 4
+ - 4
+ - 8
+ - 8
+ - 16

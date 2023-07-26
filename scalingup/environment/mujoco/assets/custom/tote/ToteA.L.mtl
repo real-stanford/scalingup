@@ -1,0 +1,14 @@
+# Blender MTL File: 'asset-v5.blend'
+# Material Count: 1
+
+newmtl ToteA.L
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.300000 0.300000 0.300000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump textures/toteA_small_Normal.jpg
+map_Kd textures/toteA_small_BaseColor.jpg

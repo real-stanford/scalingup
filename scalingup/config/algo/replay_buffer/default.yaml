@@ -1,0 +1,27 @@
+_target_: scalingup.data.window_dataset.TrajectoryWindowDataset
+rootdir: ${dataset_path}
+obs_cameras: ${obs_cameras}
+num_obs_pts: 4096
+seed: ${seed}
+num_steps_per_update: 10000
+max_num_datapoints: null
+batch_size: 1024
+remove_with_statement: True
+balance_positive_negative: True
+task_metric: success
+balance_tasks: True
+transform_augmentation: null
+# the algorithm should decide these value
+filter_negatives: ???
+filter_manually_designed_trajectories: ???
+proprioception_keys: ???
+pos_bounds: ???
+num_workers: 12
+train_tasks: ???
+rotation_representation: upper_mat
+obs_dim: ${obs_dim}
+control_representation: joint
+should_reindex: true
+return_images: ???
+return_point_clouds: ???
+return_occupancies: ???

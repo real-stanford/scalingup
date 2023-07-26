@@ -1,0 +1,34 @@
+<mujoco model="amazon package">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom group="3" friction="0.99 0.9 0.9" priority="1" />
+        </default>
+    </default>
+    <asset>
+        <mesh file="amazon_box.obj" name="box" scale="0.1 0.1 0.1" />
+        <texture type="2d" name="amazon_box_texture" file="amazon_box_texture_small.png" />
+        <material name="amazon_box_material" texture="amazon_box_texture" texuniform="true"
+            reflectance="0.0" />
+    </asset>
+
+    <worldbody>
+        <body name="amazon package">
+            <camera name="package view" pos="-0.131 0.021 0.465"
+                xyaxes="-0.145 -0.989 -0.000 0.952 -0.139 0.273" />
+
+            <geom type="mesh" euler="1.57 0.4 1.57" mesh="box" material="amazon_box_material"
+                class="visual" mass="0.0" />
+            <geom type="box" euler="1.57 0.4 1.57" pos="0 0.003 0.02" size="0.08 0.065 0.026"
+                class="collision" mass="0.02" />
+            <!-- this makes the package bottom heavy -->
+            <geom type="box" euler="1.57 0.4 1.57" pos="0 0.003 -0.08" size="0.02 0.065 0.026"
+                class="collision" mass="0.12" />
+        </body>
+    </worldbody>
+</mujoco>
+    

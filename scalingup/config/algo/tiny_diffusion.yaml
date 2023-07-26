@@ -1,0 +1,11 @@
+defaults:
+ - diffusion_default
+ - override noise_pred_net: tiny
+ - override state_sequence_encoder/vision_encoder: tiny_volume
+ - override replay_buffer: volume
+
+noise_pred_net:
+  diffusion_step_embed_dim: 32
+state_sequence_encoder:
+  task_desc_proj:
+    out_features: 16

@@ -1,0 +1,44 @@
+instructions: given an input task description, the goal is rephrase the task such that it is not ambiguous in terms of spatial relations (on top of, inside, etc.). if the task description is already specific enough, then just return the input task description.
+
+below are some examples:
+#
+task: stack the blocks on the plate
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+reasoning: task is ambiguous, because there are multiple spatial configurations the blocks can be in that satisfies the task.
+answer: move the red block onto the plate, the blue block onto the red block, and the green block on the blue block.
+#
+task: sort the blocks based on their color's temperature onto corresponding plates
+scene:
+ - red block
+ - orange block
+ - blue block
+ - purple block
+ - hot colored plate
+ - cold colored plate
+reasoning: task is not ambiguous, because which plate each block belongs on is obvious from its color.
+answer: sort the blocks based on their color's temperature onto corresponding plates.
+#
+task: move the ingredients for the omelette onto the kitchen counter
+scene:
+ - kitchen counter
+    + cupboard
+       + cupboard door
+          + cupboard door handle
+       + salt
+       + pepper
+ - fridge
+    + fridge door
+       + fridge door handle
+    + fridge top shelf
+       + eggs
+       + butter
+    + fridge bottom shelf
+       + mushroom
+       + cheese
+    + freezer
+reasoning: task is not ambiguous, because all relevant ingredients just needs to be on the kitchen counter.
+answer: move the ingredients for the omelette onto the kitchen counter.

@@ -1,0 +1,41 @@
+<mujoco model="bin">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+    </default>
+
+    <asset>
+        <material name="grey_bin" rgba="0.8 0.8 0.8 1" />
+    </asset>
+    <worldbody>
+        <body name="bin" pos="1.0 0.0 0.0" euler="0 0 0">
+            <!-- bottom -->
+            <geom size="0.17 0.17 0.01" class="visual" type="box" pos="0 0 -0.07"
+                material="grey_bin" />
+            <!-- left and right -->
+            <geom size="0.17 0.01 0.08" class="visual" type="box" pos="0 0.16 0" material="grey_bin" />
+            <geom size="0.17 0.01 0.08" class="visual" type="box" pos="0 -0.16 0"
+                material="grey_bin" />
+            <!-- front and back -->
+            <geom size="0.01 0.17 0.08" class="visual" type="box" pos="0.16 0 0" material="grey_bin" />
+            <geom size="0.01 0.17 0.08" class="visual" type="box" pos="-0.16 0 0"
+                material="grey_bin" />
+
+            <!-- bottom -->
+            <geom size="0.17 0.17 0.01" class="collision" type="box" pos="0 0 -0.07" />
+            <!-- left and right -->
+            <geom size="0.17 0.01 0.08" class="collision" type="box" pos="0 0.16 0" />
+            <geom size="0.17 0.01 0.08" class="collision" type="box" pos="0 -0.16 0" />
+            <!-- front and back -->
+            <geom size="0.01 0.17 0.08" class="collision" type="box" pos="0.16 0 0" />
+            <geom size="0.01 0.17 0.08" class="collision" type="box" pos="-0.16 0 0" />
+        </body>
+    </worldbody>
+</mujoco>
+    

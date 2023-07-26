@@ -1,0 +1,6 @@
+action_dim: 7
+replay_buffer:
+  control_representation: joint
+ctrl_config:
+  control_type: 0 # scalingup.utils.core.ControlType.JOINT
+  dof: 7

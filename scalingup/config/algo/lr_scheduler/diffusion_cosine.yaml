@@ -1,0 +1,5 @@
+_target_: diffusers.optimization.get_scheduler
+_partial_: true
+name: cosine
+num_warmup_steps: 500
+num_training_steps: ${eval:"int('${trainer.max_epochs}') * int('${..replay_buffer.num_steps_per_update}')"}

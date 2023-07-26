@@ -1,0 +1,4 @@
+should_condition_on_task_metric: False
+policy_task_metric_guidance: 0.0 # not used
+task_metric_corrupt_prob: 0.0 # not used
+policy_suppress_token: -1.0 # not used

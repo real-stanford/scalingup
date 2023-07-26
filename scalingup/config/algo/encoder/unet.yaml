@@ -1,0 +1,15 @@
+_target_: scalingup.algo.conv3d_encoder.UnetPolicyVolumeEncoder
+_convert_: 'all'
+# common
+grid_shape: ${discretizer.virtual_grid.grid_shape}
+proprioception_dim: 7
+lang_emb_dim: 512
+lang_max_seq_len: 77
+num_rotation_classes: 73
+num_grip_classes: 2
+num_contact_classes: 2
+# unet
+init_dim: 3
+inner_dim: 16
+num_groups: 8
+num_levels: 5

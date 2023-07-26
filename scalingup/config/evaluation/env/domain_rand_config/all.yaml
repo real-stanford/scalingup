@@ -1,0 +1,80 @@
+_target_: scalingup.environment.mujoco.domain_randomizer.DomainRandomizationConfig
+headlight_diffuse:
+  - 0.2
+  - 0.5
+headlight_specular:
+  - 0.0
+  - 0.1
+headlight_ambient:
+  - 0.3
+  - 0.6
+material_shininess:
+  - 0.0
+  - 1.0
+
+num_directional_lights:
+  - 1
+  - 3
+direction_light_diffuse:
+  - 0.1
+  - 0.4
+direction_light_specular:
+  - 0.1
+  - 0.4
+light_pos:
+  - - -0.2
+    - -1.0
+    - -0.2
+  - - 1.0
+    - 1.0
+    - 1.0
+
+light_lookat:
+  - - -0.1
+    - -0.2
+    - 0.0
+  - - 0.1
+    - 0.2
+    - 0.3
+
+
+add_wall_texture_prob: 0.5
+add_floor_texture_prob: 0.5
+
+wall_hsv:
+  - - 0.0
+    - 1.0
+  - - 0.0
+    - 0.1
+  - - 0.7
+    - 1.0
+floor_hsv:
+  - - 0.0
+    - 1.0
+  - - 0.0
+    - 0.1
+  - - 0.7
+    - 1.0
+table_hsv:
+  - - 0.0
+    - 1.0
+  - - 0.0
+    - 0.1
+  - - 0.7
+    - 1.0
+
+dtd_root: ???
+
+camera_pos:
+  front:
+    - - -0.1
+      - -0.2
+      - -0.1
+    - - 0.1
+      - 0.2
+      - 0.1
+
+camera_fovy:
+  front:
+    - 35
+    - 50

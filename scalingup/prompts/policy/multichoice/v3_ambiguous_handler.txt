@@ -1,0 +1,70 @@
+instructions:
+given an input task description, the goal is rephrase the task such that it is not ambiguous.
+if the task is already specific enough, just return the original task description.
+below are some examples:
+#
+task: stack the blocks on top of each other
+scene:
+ - navy block
+ - maroon block
+ - violet block
+answer: move the maroon block onto the navy block, and the violet block on the maroon block.
+#
+task: move the lilac block onto the brown block
+scene:
+ - brown block
+ - lilac block
+ - yellow block
+answer: move the lilac block onto the brown block.
+#
+task: sort the blocks based on their color's temperature onto corresponding plates
+scene:
+ - red block
+ - orange block
+ - blue block
+ - purple block
+ - red plate
+ - blue plate
+answer: move the red and orange blocks onto the red plate, and the purple and blue blocks onto the blue plate.
+#
+task: open the jar
+scene:
+ - jar
+    + jar lid
+answer: open the jar.
+#
+task: close the second drawer
+scene:
+ - drawer
+    + first drawer
+       + first drawer handle
+    + second drawer
+       + second drawer handle
+    + third drawer
+       + third drawer handle
+answer: close the second drawer.
+#
+task: move the ingredients for the omelette onto the kitchen counter
+scene:
+ - kitchen counter
+    + cupboard
+       + cupboard door
+          + cupboard door handle
+       + salt
+       + pepper
+ - fridge
+    + fridge door
+       + fridge door handle
+    + fridge top shelf
+       + eggs
+       + butter
+       + cheese
+       + milk
+    + fridge bottom shelf
+       + mushrooms
+       + broccoli
+    + freezer
+       + lamb shank
+       + trader joe's dumplings
+       + tilapia fillet
+answer: move the eggs, butter, cheese, and mushrooms onto the kitchen counter and the salt and pepper onto the kitchen counter.

@@ -1,0 +1,5 @@
+_target_: scalingup.algo.diffusion_utils.ConditionalUnet1D
+input_dim: ???
+global_cond_dim: ???
+down_dims: ???
+diffusion_step_embed_dim: ???

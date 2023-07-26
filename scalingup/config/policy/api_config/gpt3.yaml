@@ -1,0 +1,6 @@
+_target_: scalingup.utils.openai_api.GPT3APIConfig
+_convert_: 'all'
+engine: 'text-davinci-003'
+temperature: 0.0
+max_tokens: 512
+stop: ['#', 'del']

@@ -1,0 +1,63 @@
+<mujoco model="cupboard">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+    </default>
+
+    <asset>
+        <material name="wood" rgba="0.3 0.2 0.05 1" />
+    </asset>
+    <worldbody>
+        <body name="cupboard" pos="0.7 0.0 0.2" euler="0 0 3.14">
+            <!-- main body -->
+            <geom size="0.2 0.01 0.28" pos="0 -0.39 0.28" class="visual" type="box" material="wood" />
+            <geom size="0.2 0.01 0.28" pos="0 0.39 0.28" class="visual" type="box" material="wood" />
+            <geom size="0.2 0.4 0.01" pos="0 0 0.55" class="visual" type="box" material="wood" />
+            <geom size="0.01 0.4 0.28" pos="-0.19 0 0.28" class="visual" type="box" material="wood" />
+
+            <geom size="0.2 0.01 0.28" pos="0 -0.39 0.28" class="collision" type="box" />
+            <geom size="0.2 0.01 0.28" pos="0 0.39 0.28" class="collision" type="box" />
+            <geom size="0.2 0.4 0.01" pos="0 0 0.55" class="collision" type="box" />
+            <geom size="0.01 0.4 0.28" pos="-0.19 0 0.28" class="collision" type="box" />
+
+            <!-- shelves -->
+            <body name="top_shelf" pos="0 0 0.28" euler="0 0 0">
+                <geom size="0.2 0.4 0.01" class="visual" type="box" material="wood" />
+                <geom size="0.2 0.4 0.01" class="collision" type="box" />
+            </body>
+
+            <body name="bottom_shelf" pos="0 0 0.01" euler="0 0 0">
+                <geom size="0.2 0.4 0.01" class="visual" type="box" material="wood" />
+                <geom size="0.2 0.4 0.01" class="collision" type="box" />
+            </body>
+
+
+            <body name="left_door" pos="0.21 -0.4 0.28">
+                <joint name="left_door_hinge" type="hinge" axis="0 0 1" limited="true" range="-1.60 0" damping="1.0" frictionloss="0.1" />
+                <geom size="0.01 0.199 0.28" pos="0 0.199 0" class="visual" type="box" material="wood" />
+
+                <body name="left_door_handle" pos="0.04 0.35 0" euler="0 0 0">
+                    <geom size="0.01 0.05" class="visual" type="cylinder" material="wood" />
+                    <geom size="0.01 0.05" class="collision" type="cylinder" />
+                </body>
+            </body>
+
+            <body name="right_door" pos="0.21 0.4 0.28">
+                <joint name="right_door_hinge" type="hinge" axis="0 0 1" limited="true" range="0 1.60" damping="1.0" frictionloss="0.1" />
+                <geom size="0.01 0.199 0.28" pos="0 -0.199 0" class="visual" type="box" material="wood" />
+
+                <body name="right_door_handle" pos="0.04 -0.35 0" euler="0 0 0">
+                    <geom size="0.01 0.05" class="visual" type="cylinder" material="wood" />
+                    <geom size="0.01 0.05" class="collision" type="cylinder" />
+                </body>
+            </body>
+        </body>
+    </worldbody>
+</mujoco>
+    

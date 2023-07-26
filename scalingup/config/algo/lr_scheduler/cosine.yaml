@@ -1,0 +1,4 @@
+_target_: torch.optim.lr_scheduler.CosineAnnealingLR
+_partial_: True
+T_max: ${eval:"${trainer.max_epochs}*${algo.replay_buffer.num_steps_per_update}"}
+eta_min: 1e-6

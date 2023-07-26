@@ -1,0 +1,33 @@
+<mujoco model="world">
+    <option impratio="10" />
+    <default>
+        <default class="realsense">
+            <camera fovy="42.5" />
+        </default>
+    </default>
+    <asset>
+        <material name="floor" rgba="0.95 0.95 0.95 1" reflectance="0" shininess="0"
+            specular="0" />
+        <material name="wall"
+            rgba="1 1 1 1"
+            reflectance="0" shininess="0"
+            specular="0" />
+        <texture type="skybox" builtin="flat" rgb1="1 1 1" rgb2="1 1 1" width="8"
+            height="16" />
+    </asset>
+
+    <visual>
+        <headlight diffuse="0.6 0.6 0.6" ambient="0.6 0.6 0.6" specular="0.6 0.6 0.6" />
+        <global azimuth="120" elevation="-20" offheight="512" />
+        <quality numquads="32" />
+    </visual>
+
+    <worldbody>
+        <geom name="floor" size="0 0 0.05" type="plane" material="floor" pos="0 0 -0.3" />
+        <geom name="wall" size="0 0 0.05" type="plane" material="wall" pos="-0.6 0 0.4"
+            euler="0 1.57 0" />
+        <camera class="realsense" name="front" pos="1.4 0.0 0.8" xyaxes="0 1.000 0.000 -0.4 0.0 0.8" />
+        <camera class="realsense" name="top_down" pos="0.4 0.0 0.92"
+            xyaxes="0.0 -1.000 0.0 1.000 0.0 0.0" />
+    </worldbody>
+</mujoco>

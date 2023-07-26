@@ -1,0 +1,9 @@
+defaults:
+  - replay_buffer: image
+  - _self_
+state_sequence_encoder:
+  should_condition_on_vision: false
+replay_buffer:
+  return_images: false
+  return_point_clouds: false
+  pos_bounds: null

@@ -1,0 +1,85 @@
+instructions:
+given an input task description, the goal is to classify whether performing the task will involve touching only "one" object or "multiple" objects.
+all objects start in a de-activated state (e.g., doors, drawers, cabinets, cupboards, and other containers are closed, lights are off, etc.) unless specified otherwise (e.g., with the door opened).
+after performing the task, objects should be reset to their de-activated state if relevant.
+below are some examples:
+#
+task: move the blue block onto the plate
+scene:
+ - green block
+ - blue block
+ - red block
+ - plate
+reasoning: "moving the blue block onto the plate" involves two objects, the blue block and the plate. moving the blue block requires touching it. the plate does not have any activation state, so does not need to be touched.
+answer: one.
+#
+task: stack the blocks on the plate
+scene:
+ - green block
+ - plate
+ - red block
+ - blue block
+reasoning: "stack the blocks" can be decomposed into moving the red block onto the plate, moving the green block onto the red block, and moving the blue block onto the green block. performing these steps involve touching multiple blocks.
+answer: multiple.
+#
+task: with the red block on the plate and the orange block on the red block, move the green block onto the pink block
+scene:
+ - orange block
+ - pink block
+ - plate
+ - green block
+ - red block
+reasoning: "moving the green block onto the pink block" involves two objects, the green block and the pink block. moving the green block requires touching it. the pink block does not have any activation state, so does not need to be touched.
+answer: one.
+#
+task: move the lasagna into the microwave
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+ - lasagna
+reasoning: "moving the pasta into the microwave" involves only two objects, the lasagna and the microwave. however, it is not a primitive task because the microwave needs to be opened so the lasagna can be placed inside it, but it starts off being closed. opening the microwave involves touching the microwave.
+answer: multiple.
+#
+task: with the microwave opened, move the pasta into the microwave
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+ - fridge
+    + fridge door
+       + fridge door handle
+ - pasta
+reasoning: "moving the pasta into the microwave" involves two objects, the pasta and the microwave. the microwave needs to be opened so the lasagna can be placed inside it, but it is already opened. since the task asserts that the microwave is opened, it also does not need to be closed afterwards. this means performing the task does not involve touching the microwave.
+answer: multiple.
+#
+task: open the microwave
+scene:
+ - fridge
+    + fridge door
+       + fridge door handle
+ - dumplings
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+reasoning: "opening the microwave" is a primitive task. it involves only one object, the microwave.
+answer: one.
+#
+task: with the microwave opened and the sandwich in the microwave, close the microwave
+scene:
+ - fridge
+    + fridge door
+       + fridge door handle
+ - sandwich
+ - microwave
+    + microwave door
+       + microwave door handle
+ - kitchen counter
+reasoning: "closing the microwave" is a primitive task. it involves only one object, the microwave.
+answer: one.

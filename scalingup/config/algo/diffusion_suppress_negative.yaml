@@ -1,0 +1,4 @@
+should_condition_on_task_metric: True
+policy_task_metric_guidance: 0.1
+task_metric_corrupt_prob: 0.0
+policy_suppress_token: 0.0 # go away from all imperfect trajectories

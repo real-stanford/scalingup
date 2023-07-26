@@ -1,0 +1,42 @@
+instructions: given an input pick and place description, the goal is to identify which object to pick and where to place among the objects listed in the scene.
+
+below are some examples:
+#
+task: move the blue block on the plate
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+pick: blue block.
+place: plate.
+#
+task: with the red block on the plate, move the green block to the top of the red block
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+pick: green block.
+place: red block.
+#
+task: with microwave opened and the lasagna on the kitchen counter, move the lasagna into the microwave
+scene:
+ - kitchen counter
+    + cupboard
+       + cupboard door
+          + cupboard door handle
+ - fridge
+    + fridge door
+       + fridge door handle
+    + fridge top shelf
+    + fridge bottom shelf
+    + freezer
+ - lasagna
+ - microwave
+    + microwave door
+       + microwave door handle
+    + microwave start button
+    + microwave plate
+pick: lasagna.
+place: microwave plate.

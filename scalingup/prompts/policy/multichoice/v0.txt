@@ -1,0 +1,42 @@
+All action primitives are made up of one of three options:
+1. line(grasp_position, target_position)
+  - This action moves the end effector to a `grasp_position` at an orientation, closes the gripper, moves from the `grasp_position` to the `target_position`, then releases the gripper.
+  - This action involves moving only one object, and touching it only once. It is suitable for pick-and-places or interacting with objects with prismatic (i.e., sliding) joints.
+2. curve(grasp_position, axis, angle, rotation_center)
+  - Similar to the previous `line` action, but instead of moving in a straight line, it moves in a circular path, whose center is at `rotation_center`, about `axis` for the specified amount `angle` in degrees.
+  - This action involves moving only one object, and touching it only once. It is suitable for interacting with objects with revolute (i.e., rotating, hinge-like) joints.
+3. composite action:
+  - These are actions which involves either grasping then releasing one object multiple times, moving one object in a trajectory more complex than a straight line or circle, or actions involving more than one object. 
+  - The parameters of this action is the list of sub-actions which this action could be decomposed into. These sub-actions should be describable using `line` or `curve` (involves only a simple movement of a single object).
+
+Below are some examples:
+#
+Task: stack the blocks on the plate
+Scene: [red block, blue block, green block, plate]
+Action: composite.
+Action Parameters:
+ - move the green block on the plate
+ - move the blue block on the green block
+ - move the red block on the blue block
+#
+Task: turn on the lights
+Scene: [ceiling light, light switch, wall]
+Action: line
+Action Parameters: line(grasp_position=light switch, target_position=slightly above the light switch original starting position)
+#
+Task: open the microwave
+Scene: [microwave, kitchen counter]
+Action: circular.
+Action Parameters: circular(grasp_position=microwave door on the far end, axis=parallel to microwave hinge, angle=joint limit of micrwave hinge, rotation_center=location of microwave hinge)
+#
+Task: heat up the lasagna in the firdge
+Scene: [microwave, kitchen counter, fridge, lasagna]
+Action: composite
+Action Parameters:
+ - open fridge 
+ - move lasagna to kitchen counter
+ - close fridge 
+ - open microwave
+ - move lasagna inside microwave
+ - close microwave
+ - press the microwave start button

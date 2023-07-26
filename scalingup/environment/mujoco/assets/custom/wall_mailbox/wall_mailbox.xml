@@ -1,0 +1,104 @@
+<mujoco model="mailbox">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom group="3" condim="1" friction="0" />
+        </default>
+        <default class="graspable_collision">
+            <geom group="3" priority="2" condim="6" friction="0.99 0.99 0.99" />
+        </default>
+    </default>
+    <asset>
+        <mesh file="lid.obj" name="lid" />
+        <mesh file="flag.obj" name="flag" scale="2 1 1" />
+        <mesh file="main_box.obj" name="main_box" />
+        <mesh file="handle.obj" name="handle" />
+        <material name="red" specular="0.5" shininess="0.25" rgba="1 0 0 1" />
+        <material name="black" specular="0.0" shininess="0.0" rgba="0.2 0.2 0.2 1" />
+        <material name="grey" specular="0.0" shininess="0.0" rgba="0.5 0.5 0.5 1" />
+    </asset>
+
+    <worldbody>
+        <body name="mailbox" euler="0 0 3.14">
+            <geom type="mesh" mesh="main_box" material="black" class="visual" />
+            <geom type="box" size="0.13 0.07 0.008"
+                pos="0 0 -0.008"
+                class="collision" />
+            <geom type="box" size="0.13 0.008 0.13"
+                pos="0 0.07 0.12"
+                class="collision" />
+            <geom type="box" size="0.13 0.008 0.108"
+                pos="0 -0.07 0.108"
+                class="collision" />
+
+            <geom type="box" size="0.008 0.07 0.10"
+                pos="0.12 0 0.10"
+                class="collision" />
+            <geom type="box" size="0.008 0.07 0.10"
+                pos="-0.12 0 0.10"
+                class="collision" />
+            <geom type="box" size="0.008 0.07 0.03"
+                pos="0.12 0.0 0.20" euler="0.3 0 0"
+                class="collision" />
+            <geom type="box" size="0.008 0.07 0.03"
+                pos="-0.12 0.0 0.20" euler="0.3 0 0"
+                class="collision" />
+
+
+            <camera name="mailbox_inside_view" pos="0 0 0.2"
+                euler="0 0 0" fovy="80" />
+
+            <body name="mailbox_lid" pos="0.0 0.066561 0.255833">
+                <joint name="mailbox_lid_hinge" armature="0.008" damping="5" range="0 2.0"
+                    type='hinge'
+                    axis="-1 0 0" springref="2.0" stiffness="0.003" />
+
+                <geom type="mesh" mesh="lid" material="black" class="visual"
+                    pos="0 -0.066561 -0.255833" mass="0.001" />
+                <geom type="mesh" mesh="lid" class="collision"
+                    pos="0 -0.066561 -0.255833" mass="0.001" />
+                <body name="mailbox_lid_handle" pos="0 -0.066561 -0.255833">
+                    <camera name="mailbox_lid_handle_view" pos="0 -0.1 0.23"
+                        euler="1.9 0 0" fovy="120" />
+                    <geom type="mesh" mesh="handle" material="grey" class="visual" mass="0.001" />
+                    <geom type="cylinder" class="graspable_collision" size="0.01 0.042"
+                        euler="0 1.570796326 0"
+                        pos="0 -0.06 0.25" mass="0.001" />
+                    <geom type="cylinder" class="visual" material="grey" size="0.01 0.042"
+                        euler="0 1.570796326 0"
+                        pos="0 -0.06 0.25" mass="0.0" />
+                </body>
+            </body>
+
+
+            <body name="mailbox_flag" pos="0.14 -0.054504 0.205545">
+                <!-- <camera name="mailbox_flag_view" pos="0 0.14 -0.01"
+                    euler="1.5707963267 3.1415926535 0" fovy="120" /> -->
+                <camera name="mailbox_flag_view" pos="0.04 0.13 -0.01"
+                    euler="1.5707963267 2.3 0" fovy="120" />
+                <joint name="flag_hinge" damping="2" range="0.0 1.65"
+                    type='hinge'
+                    ref="0.0"
+                    axis="1 0 0" springref="1.65" stiffness="0.01" />
+                <geom type="mesh" mesh="flag" material="red" class="visual"
+                    pos="-0.265 0.054504 -0.205545" mass="0" />
+                <geom type="box" size="0.01 0.06 0.0075"
+                    pos="0.005 0.05 0"
+                    class="graspable_collision" mass="0" />
+                <geom type="box" size="0.01 0.016 0.023"
+                    pos="0.005 0.103 -0.015"
+                    class="graspable_collision" />
+            </body>
+        </body>
+    </worldbody>
+    <contact>
+        <exclude name="lid_body" body1="mailbox_lid" body2="mailbox" />
+        <exclude name="flag_body" body1="mailbox_flag" body2="mailbox" />
+        <exclude name="flag_lid" body1="mailbox_flag" body2="mailbox_lid" />
+    </contact>
+</mujoco>
+    

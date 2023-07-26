@@ -1,0 +1,89 @@
+<mujoco model="wsg50">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" cone="elliptic" />
+    <!-- https://mujoco.readthedocs.io/en/stable/XMLreference.html?highlight=elliptic#option use
+    elliptic cones for more realism -->
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+        <default class="finray_collision">
+            <geom condim="6" friction="0.9 0.1 0.1" group="3" priority="1" />
+        </default>
+    </default>
+
+    <asset>
+        <material name="gripper" rgba="0.6 0.6 0.6 1" reflectance="0.1" />
+        <material name="milibar" rgba="0.05 0.05 0.05 1" reflectance="0.4" />
+        <material name="milibar_connector" rgba="0.4 0.4 0.45 1" reflectance="0.0" />
+        <mesh name="base" file="meshes/WSG50_110.stl" />
+
+        <texture type="2d" name="texture"
+            file="../finray/one_piece_wide_grasp_finray_finger_color.png" />
+        <material name="finray_material" texture="texture" specular="0.5" shininess="0.0" />
+        <mesh name="finger" file="../finray/one_piece_wide_grasp_finray_finger.obj"
+            scale="0.76923076923 1.0 1.0" />
+        <mesh name="finger_collider" file="../finray/collider.obj" scale="0.76923076923 1.0 1.0" />
+
+        <mesh name="mount" file="meshes/mount.obj" />
+        <mesh name="mount_collider_1" file="meshes/mount_collider_1.obj" />
+        <mesh name="mount_collider_2" file="meshes/mount_collider_2.obj" />
+    </asset>
+    <worldbody>
+        <body name="base">
+            <site name="mount" group="3" />
+            <!-- <camera name='debug' pos="-0.135 -0.200 0.087"
+                xyaxes="0.825 -0.565 0.000 0.071 0.104 0.992" />
+            <camera name='debug2' pos="-0.002 -0.145 -0.170"
+                xyaxes="1.000 -0.005 -0.000 -0.005 -0.884 0.467" /> -->
+
+            <!-- milibar -->
+            <geom size="0.041 0.009" type="cylinder" material="milibar" class="visual"
+                pos="0 0 0.009" />
+            <geom size="0.041 0.009" type="cylinder" class="collision" pos="0 0 0.009" />
+
+            <geom type="mesh" mesh="mount" material="milibar_connector" class="visual"
+                pos="0 0 0.008" euler="0 0 1.57079632679" />
+            <geom type="mesh" mesh="mount_collider_1" class="collision" pos="0 0 0.008"
+                euler="0 0 1.57079632679" />
+            <geom type="mesh" mesh="mount_collider_2" class="collision" pos="0 0 0.008"
+                euler="0 0 1.57079632679" />
+            <site name="cam_mount" size="0.001" group="2"
+                pos="-0.032507  -0.065 0.054202" />
+
+            <geom mesh="base" type="mesh" class="visual" mass="0.5" material="gripper"
+                pos="0 0 0.03" />
+            <geom size="0.073 0.025 0.036" type="box" class="collision" pos="0 0 0.066" />
+
+            <body name="right_finger" pos="0 0 0.102" euler="0 0 1.57079632679">
+                <joint name="right_driver_joint" range="0.00 0.054" damping="20"
+                    type="slide" axis="0 -1 0" />
+                <geom mesh="finger" type="mesh" class="visual" mass="0.1" material="finray_material" />
+                <geom mesh="finger_collider" type="mesh" class="finray_collision" />
+                <geom size="0.015 0.01 0.01" type="box" class="collision" pos="0 -0.012 0.0105" />
+            </body>
+            <body name="left_finger" pos="0 0 0.102" euler="0 0 -1.57079632679">
+                <joint name="left_driver_joint" range="0.00 0.054" damping="20"
+                    type="slide" axis="0 -1 0" />
+                <geom mesh="finger" type="mesh" class="visual" mass="0.1" material="finray_material" />
+                <geom mesh="finger_collider" type="mesh" class="finray_collision" />
+                <geom size="0.015 0.01 0.01" type="box" class="collision" pos="0 -0.012 0.0105" />
+            </body>
+            <site name="end_effector" group="3" pos="0 0 0.25491" />
+        </body>
+    </worldbody>
+
+    <equality>
+        <joint joint1="right_driver_joint" joint2="left_driver_joint"
+            solimp="0.8 0.85 0.001" solref="0.005 1" />
+    </equality>
+
+    <actuator>
+        <position name="gripper" kp="2000" forcerange="-80 80" ctrlrange="0 0.055"
+            joint="right_driver_joint" />
+    </actuator>
+</mujoco>
+    

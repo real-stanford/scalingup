@@ -1,0 +1,12 @@
+_target_: ???
+auto_incr_episode_ids: true
+start_episode: 0
+num_episodes: 50
+num_processes: ${num_processes}
+remote: true
+defaults:
+  - sampler_config: default
+  - ../ctrl_config@ctrl_config: four_hertz
+  - _self_
+
+# list in defaults list https://hydra.cc/docs/patterns/select_multiple_configs_from_config_group/

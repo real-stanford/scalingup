@@ -1,0 +1,9 @@
+_target_: scalingup.algo.diffusion.DiffusionPolicy.from_path
+inference_device: 'cuda'
+path: ???
+remote: True
+task_metric_guidance: null
+suppress_token: null
+towards_token: null
+num_inference_steps: null
+action_horizon: null

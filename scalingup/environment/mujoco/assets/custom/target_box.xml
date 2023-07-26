@@ -1,0 +1,36 @@
+<mujoco model="box">
+    <option impratio="10" />
+    <default>
+        <default class="visual">
+            <geom contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom group="3" condim="1" friction="0.1" priority="2" />
+        </default>
+    </default>
+    <asset>
+        <material name="blue" rgba="0.1 0.4 0.6 1" />
+    </asset>
+    <worldbody>
+        <body name="box">
+            <geom type="box" size="0.08 0.08 0.02" class="collision" />
+            <geom type="box" size="0.08 0.08 0.02" class="visual" material="blue" />
+
+            <geom type="box" size="0.08 0.01 0.06" pos="0.0 0.07 0.06" class="collision" />
+            <geom type="box" size="0.08 0.01 0.06" pos="0.0 0.07 0.06" class="visual"
+                material="blue" />
+
+            <geom type="box" size="0.08 0.01 0.06" pos="0.0 -0.07 0.06" class="collision" />
+            <geom type="box" size="0.08 0.01 0.06" pos="0.0 -0.07 0.06" class="visual"
+                material="blue" />
+
+            <geom type="box" size="0.01 0.08 0.06" pos="0.07 0.0 0.06" class="collision" />
+            <geom type="box" size="0.01 0.08 0.06" pos="0.07 0.0 0.06" class="visual"
+                material="blue" />
+
+            <geom type="box" size="0.01 0.08 0.06" pos="-0.07 0.0 0.06" class="collision" />
+            <geom type="box" size="0.01 0.08 0.06" pos="-0.07 0.0 0.06" class="visual"
+                material="blue" />
+        </body>
+    </worldbody>
+</mujoco>

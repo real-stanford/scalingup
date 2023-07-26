@@ -1,0 +1,16 @@
+defaults:
+ - image_base
+ - resnet18
+ - _self_
+# default resnet doesn't include random crop yet
+transforms:
+  - _target_: torchvision.transforms.RandomCrop
+    size: ${eval:"[int(0.9 * x) for x in ${obs_dim}]"}
+    # NOTE this is 90% crop from ${obs_dim} because
+    # this crop comes before the resizing
+use_spatial_softmax: true
+spatial_softmax_input_shape:
+ - 512
+ - 8
+ - 12
+spatial_softmax_num_kp: 256

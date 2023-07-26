@@ -1,0 +1,6 @@
+defaults:
+  - replay_buffer: image
+  - override state_sequence_encoder/vision_encoder: image_robomimic # {image_robomimic, image_resnet}
+  - _self_
+replay_buffer:
+  obs_dim: ${..state_sequence_encoder.vision_encoder.obs_dim}

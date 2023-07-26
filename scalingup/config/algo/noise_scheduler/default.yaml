@@ -1,0 +1,4 @@
+defaults:
+  - ddim
+  - _self_
+num_train_timesteps: ??? # algo should specify this

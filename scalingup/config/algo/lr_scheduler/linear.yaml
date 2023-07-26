@@ -1,0 +1,3 @@
+_target_: torch.optim.lr_scheduler.LinearLR
+_partial_: True
+total_iters: 5

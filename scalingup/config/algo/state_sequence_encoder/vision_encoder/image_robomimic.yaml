@@ -1,0 +1,29 @@
+defaults:
+  - image_base
+  - _self_
+# robomimic obs encoder already does random crop
+transforms:
+  # uncomment to enable random perspective
+  # - _target_: torchvision.transforms.RandomPerspective
+  #   distortion_scale: 0.05
+  #   p: 1.0
+  #   fill: 210
+  - _target_: torchvision.transforms.RandomRotation
+    degrees:
+      - -2.0
+      - 2.0
+    expand: true
+  - _target_: torchvision.transforms.ColorJitter
+    brightness: 0.2
+    contrast: 0.5
+    saturation: 0.2
+    hue: 0.2
+
+base_model:
+  _target_: scalingup.algo.state_encoder.robomimic_obs_enc.RobomimicImageEncoder
+  input_shape: ${..resize_obs_dim}
+  # 90% crop from ${resize_obs_dim} because this crop comes after
+  # the resizing
+  crop_shape: ${eval:"[int(0.9 * x) for x in ${..resize_obs_dim}]"}
+  num_kp: 32 # default from Robomimic
+per_view_output_dim: 64

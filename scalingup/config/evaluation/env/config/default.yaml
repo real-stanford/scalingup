@@ -1,0 +1,28 @@
+_convert_: all
+_target_: scalingup.utils.core.EnvConfig
+obs_cameras: ${obs_cameras}
+obs_dim: ${obs_dim}
+ctrl: ${ctrl_config}
+settle_time_after_dropped_obj: 1.0
+ee_action_num_grip_steps: 25
+num_action_candidates: 500
+max_pushin_dist: 0.05
+min_pushin_dist: -0.01
+solve_ee_inplace: true # more efficient
+# revolution action
+num_steps_multiplier:  40.0
+min_steps: 4
+rotate_gripper_threshold: 0.0
+# place action
+pointing_up_normal_threshold: 0.95
+place_height_min: 0.02
+place_height_max: 0.15
+preplace_dist_min: 0.05
+preplace_dist_max: 0.35
+# move end effector options
+fallback_on_rrt_fail: false
+# action execution
+end_on_failed_execution: true
+# action primitives
+grasp_primitive_z_pushin: 0.01
+grasp_primitive_z_backup: 0.2

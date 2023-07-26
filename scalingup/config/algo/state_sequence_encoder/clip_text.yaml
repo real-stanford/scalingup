@@ -1,0 +1,3 @@
+text_dim: ${eval:"512 * 77"} # clip dim * clip seq len
+use_one_hot: false
+use_last_hidden_state: true

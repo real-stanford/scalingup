@@ -1,0 +1,26 @@
+<mujoco model="block">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" />
+    <custom>
+        <text name="semantic_class" data="block" />
+    </custom>
+    <default>
+        <default class="visual">
+            <geom contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom group="3" />
+        </default>
+    </default>
+
+    <worldbody>
+        <body name="block">
+            <geom type="box" size="0.02 0.02 0.02" class="visual" />
+            <geom type="box" size="0.02 0.02 0.02" class="collision" />
+            <camera name="block_view" mode="track" pos="-0.08 -0.08 0.08"
+                xyaxes="0.694 -0.720 0.000 0.379 0.366 0.850" />
+
+        </body>
+    </worldbody>
+</mujoco>
+    

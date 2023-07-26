@@ -1,0 +1,5 @@
+trainer:
+  devices: 2 # set this number
+  strategy:
+    _target_: pytorch_lightning.strategies.DDPStrategy
+    process_group_backend: gloo

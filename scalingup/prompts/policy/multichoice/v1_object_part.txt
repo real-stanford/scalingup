@@ -1,0 +1,79 @@
+instructions: given an input task description, the goal is to identify which object part from the scene to interact with.
+
+below are some examples:
+#
+task: stack the blue block on the plate
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+answer: blue block.
+#
+task: with the red block on the plate, stack the green block on the red block
+scene:
+ - red block
+ - blue block
+ - green block
+ - plate
+answer: green block.
+#
+task: turn on the lights
+scene:
+ - light switch
+ - ceiling light
+ - wall
+answer: light switch.
+#
+task: open the microwave
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+    + microwave start button
+    + microwave plate
+ - kitchen counter
+    + cupboard
+       + cupboard door
+          + cupboard door handle
+answer: microwave door handle.
+#
+task: with microwave opened and the lasagna on the kitchen counter, move the lasagna into the microwave
+scene:
+ - kitchen counter
+    + cupboard
+       + cupboard door
+          + cupboard door handle
+ - fridge
+    + fridge door
+       + fridge door handle
+    + fridge top shelf
+    + fridge bottom shelf
+    + freezer
+ - lasagna
+ - microwave
+    + microwave door
+       + microwave door handle
+    + microwave start button
+    + microwave plate
+answer: lasagna.
+#
+task: with the fridge door opened, open the cupboard
+scene:
+ - microwave
+    + microwave door
+       + microwave door handle
+    + microwave start button
+    + microwave plate
+ - kitchen counter
+    + cupboard
+       + cupboard door
+          + cupboard door handle
+ - fridge
+    + fridge door
+       + fridge door handle
+    + fridge top shelf
+    + fridge bottom shelf
+    + freezer
+ - lasagna
+answer: cupboard door handle.

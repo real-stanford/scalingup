@@ -1,0 +1,12 @@
+defaults:
+  - single_env
+  - _self_
+sampler_config:
+  max_time: 10 # in seconds
+
+env:
+  _target_: scalingup.environment.mujoco.table_top_pick_and_place.TableTopPickAndPlace
+  obj_instance_configs: []
+
+task_sampler:
+  tasks: []
