@@ -905,17 +905,17 @@ class MujocoUR5WSG50FinrayEnv(MujocoUR5Env):
 class MujocoUR5Robotiq85fEnv(MujocoUR5Env):
     def __init__(
         self,
-        num_setup_variations: Optional[int] = None,
-        num_pose_variations: Optional[int] = None,
+        # num_setup_variations: Optional[int] = None,
+        # num_pose_variations: Optional[int] = None,
         **kwargs,
     ):
-        self.num_setup_variations = num_setup_variations
-        self.num_pose_variations = num_pose_variations
-        self.episode_id = 0
+        # self.num_setup_variations = num_setup_variations
+        # self.num_pose_variations = num_pose_variations
+        # self.episode_id = 0
         super().__init__(
             robot_cls=UR5Robotiq,
-            num_setup_variations=num_setup_variations,
-            num_pose_variations=num_pose_variations,
+            # num_setup_variations=num_setup_variations,
+            # num_pose_variations=num_pose_variations,
             **kwargs,
         )
         assert len(self.obj_qpos_indices) == len(self.obj_qpos_ranges)
@@ -926,10 +926,26 @@ class MujocoUR5Robotiq85fEnv(MujocoUR5Env):
 
         # load robot scene
         robot_scene_model = mjcf.from_path(
-            "scalingup/environment/mujoco/assets/ur5-robotiq.xml",
+            # "scalingup/environment/mujoco/assets/ur5-robotiq.xml",
+            "scalingup/environment/mujoco/assets/menagerie/universal_robots_ur5e/ur5e.xml",
         )
 
         del robot_scene_model.keyframe
+        robot_scene_model.worldbody.light.clear()
+        attachment_site = robot_scene_model.find("site", "attachment_site")
+        assert attachment_site is not None
+        gripper = mjcf.from_path(
+            "scalingup/environment/mujoco/assets/menagerie/robotiq_2f85/2f85.xml",
+        )
+
+        cam_mount_site = gripper.find("site", "cam_mount")
+        cam = mjcf.from_path(
+            "scalingup/environment/mujoco/assets/menagerie/realsense_d435i/d435i_with_cam.xml"
+        )
+        cam_mount_site.attach(cam)
+
+        attachment_site.attach(gripper)
+
         self.robot_model_name = robot_scene_model.model
         world_model.attach(robot_scene_model)
 
@@ -941,6 +957,76 @@ class MujocoUR5Robotiq85fEnv(MujocoUR5Env):
 
 
 class MujocoUR5EnvFromObjConfigList(MujocoUR5WSG50FinrayEnv):
+    def __init__(self, obj_instance_configs: List[MujocoObjectInstanceConfig], **kwargs):
+        self.obj_instance_configs = obj_instance_configs
+        super().__init__(**kwargs)
+
+    def setup_objs(self, world_model: RootElement) -> QPosRange:
+        # load objects
+        self.assert_visible_objs_at_reset = set()
+        obj_qpos_ranges = super().setup_objs(world_model=world_model)
+        for obj_instance_config in self.obj_instance_configs:
+            obj_model = mjcf.from_path(obj_instance_config.asset_path)
+            if obj_instance_config.name is not None:
+                obj_model = self.rename_model(
+                    model=obj_model, name=obj_instance_config.name
+                )
+
+            if obj_instance_config.color_config is not None:
+                obj_class = obj_instance_config.obj_class
+                color_name = obj_instance_config.color_config.name
+                obj_model.model = f"{color_name}_{obj_class}"
+                assert len(obj_model.find_all("body")) == 1
+                obj_model.find_all("body")[0].name = f"{color_name}_{obj_class}"
+                # add material node to change color
+                material_name = f"{color_name}_{obj_class}"
+                obj_model.asset.add(
+                    "material",
+                    name=material_name,
+                    rgba=(*obj_instance_config.color_config.rgb, 1),
+                )
+                for geom in obj_model.find_all("geom"):
+                    geom.material = material_name
+
+            self.add_obj_from_model(
+                obj_model=obj_model,
+                world_model=world_model,
+                position=obj_instance_config.position,
+                euler=obj_instance_config.euler,
+                add_free_joint=obj_instance_config.add_free_joint,
+            )
+            obj_qpos_ranges.extend(
+                obj_instance_config.qpos_range
+                if obj_instance_config.qpos_range is not None
+                else (
+                    DegreeOfFreedomRange(lower=lower, upper=upper)
+                    for lower, upper in [
+                        # 3D position
+                        (0.4, 0.5),
+                        (-0.05, 0.05),
+                        (0.1, 0.2),
+                        # euler rotation
+                        (-np.pi, np.pi),
+                        (-np.pi, np.pi),
+                        (-np.pi, np.pi),
+                    ]
+                )
+            )
+            part_path = "".join(
+                [
+                    obj_model.model,
+                    MJCF_NEST_TOKEN,
+                    LINK_SEPARATOR_TOKEN,
+                    obj_model.model,
+                    MJCF_NEST_TOKEN,
+                    obj_model.model,
+                ],
+            )
+            self.assert_visible_objs_at_reset.add(part_path)
+        return obj_qpos_ranges
+    
+
+class MujocoUR5Robotiq85fEnvFromObjConfigList(MujocoUR5Robotiq85fEnv):
     def __init__(self, obj_instance_configs: List[MujocoObjectInstanceConfig], **kwargs):
         self.obj_instance_configs = obj_instance_configs
         super().__init__(**kwargs)

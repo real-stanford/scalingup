@@ -5,7 +5,7 @@ obs_dim: ${obs_dim}
 ctrl: ${ctrl_config}
 settle_time_after_dropped_obj: 1.0
 ee_action_num_grip_steps: 25
-num_action_candidates: 500
+num_action_candidates: 1000
 max_pushin_dist: 0.05
 min_pushin_dist: -0.01
 solve_ee_inplace: true # more efficient

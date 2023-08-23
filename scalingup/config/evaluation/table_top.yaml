@@ -5,7 +5,8 @@ sampler_config:
   max_time: 10 # in seconds
 
 env:
-  _target_: scalingup.environment.mujoco.table_top_pick_and_place.TableTopPickAndPlace
+  # _target_: scalingup.environment.mujoco.table_top_pick_and_place.TableTopPickAndPlace
+  _target_: scalingup.environment.mujoco.table_top_pick_and_place.TableTopPickAndPlaceRobotiq85
   obj_instance_configs: []
 
 task_sampler:

@@ -392,7 +392,7 @@ class GPT3Wrapper:
                     logging.warning(f"Retrying after {GPT3Wrapper.TIMEOUT}s.")
                     time.sleep(GPT3Wrapper.TIMEOUT)
         # Until Github issue is fixed, use next best alternative
-        api_config.echo = False
+        api_config.echo = True
         m = hashlib.sha256()
         m.update(prompt.encode("utf-8"))
         m.update(str(api_config).encode("utf-8"))

@@ -12,6 +12,7 @@ obs_cameras:
  - front
  - top_down
  - ur5e/wsg50/d435i/rgb
+#  - ur5e/robotiq_2f85/d435i/rgb
 main_cam: front # this is used in visibility checker
 obs_dim:
   - 160

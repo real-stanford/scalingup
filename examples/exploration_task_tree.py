@@ -14,7 +14,9 @@ if __name__ == "__main__":
     # this will create the data generation policy from our paper
     # complete with verify & retry and the 6 DoF exploration primitives
     datagen_policy = set_up_policy(policy_config_name="scalingup")
-    env, task_sampler, env_sampler_config = set_up_env("drawer")
+    # task_name = "drawer"
+    task_name = "bin_transport_train"
+    env, task_sampler, env_sampler_config = set_up_env(task_name)
     obs = env.reset(episode_id=0)
     task = task_sampler.sample(obs=obs, seed=0)
     # state encoder simply parses through the env state to output a
