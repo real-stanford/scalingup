@@ -65,10 +65,8 @@
         <geom class="visual" mesh="base" material="black"/>
         <geom class="collision" mesh="base"/>
         <site name="pinch" pos="0 0 0.145" type="sphere" group="5" rgba="0.9 0.9 0.9 1" size="0.005"/>
-        <!-- <site name="cam_mount" size="0.001" group="2"
-                pos="-0.032507  -0.065 0.054202"/> -->
         <site name="cam_mount" size="0.001" group="2"
-                pos="0.065 0.0 -0.01" quat="0.7068252 0 0 0.7073883"/>
+                pos="0.065 0.0 -0.01" quat="1 0 0 1"/>
         <!-- Right-hand side 4-bar linkage -->
         <body name="right_driver" pos="0 0.0306011 0.054904">
           <inertial mass="0.00899563" pos="2.96931e-12 0.0177547 0.00107314" quat="0.681301 0.732003 0 0"

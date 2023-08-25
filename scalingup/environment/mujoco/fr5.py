@@ -208,3 +208,85 @@ class FR5Robotiq(FR5):
             os.path.join(self.prefix, "robotiq_2f85", link_name)
             for link_name in self.ee_link_names
         ]
+
+
+class FR5WSG50Finray(FR5):
+    def __init__(
+        self,
+        mj_physics: mujoco.Physics,
+        bodyid: int,
+        prefix: str = "",
+    ):
+        end_effector_links = filter(
+            lambda body: "right_finger" in body.name or "left_finger" in body.name,
+            map(mj_physics.model.body, range(mj_physics.model.nbody)),
+        )
+        gripper_link_paths = [
+            get_part_path(model=mj_physics.model, body=body)
+            for body in end_effector_links
+        ]
+        super().__init__(
+            mj_physics=mj_physics,
+            prefix=prefix,
+            bodyid=bodyid,
+            init_joints=super().home_joint_ctrl_val,
+            gripper_link_paths=gripper_link_paths,
+            gripper_joint_name="wsg50/right_driver_joint",
+            gripper_actuator_name="wsg50/gripper",
+        )
+
+    @property
+    def home_joint_ctrl_val(self) -> np.ndarray:
+        return np.concatenate(
+            (super().home_joint_ctrl_val, np.array([self.gripper_open_ctrl_val])), axis=0
+        )
+
+    @property
+    def home_ctrl_qpos(self) -> np.ndarray:
+        return np.concatenate(
+            (
+                super().home_joint_ctrl_val,
+                np.array([self.gripper_open_ctrl_val, self.gripper_open_ctrl_val]),
+            ),
+            axis=0,
+        )
+
+    @property
+    def gripper_close_ctrl_val(self) -> float:
+        return 0.0
+
+    @property
+    def gripper_open_ctrl_val(self) -> float:
+        return 0.055
+
+    @property
+    def ee_link_names(self) -> List[str]:
+        return [
+            "base",
+            "right_finger",
+            "left_finger",
+        ]
+
+    @property
+    def end_effector_site_name(self) -> str:
+        # TODO make sure self.prefix is frozen
+        return os.path.join(self.prefix, "wsg50", "end_effector")
+
+    @property
+    def end_effector_rest_orientation(self) -> np.ndarray:
+        return euler.euler2quat(np.pi, 0, -np.pi / 2)
+
+    @property
+    def end_effector_links(self) -> List[Any]:
+        return [
+            self.mj_physics.model.body(os.path.join(self.prefix, "wsg50", link_name))
+            for link_name in self.ee_link_names
+        ]
+
+    @property
+    def ee_link_paths(self) -> List[str]:
+        return [
+            os.path.join(self.prefix, "wsg50", link_name)
+            for link_name in self.ee_link_names
+        ]
+    
