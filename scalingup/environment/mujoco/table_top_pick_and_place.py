@@ -5,9 +5,14 @@ from dm_control.mjcf import RootElement
 from scalingup.environment.mujoco.mujocoEnv import (
     # DynamicMujocoUR5Env,
     MujocoUR5EnvFromObjConfigList,
-    MujocoUR5Robotiq85fEnvFromObjConfigList
+    MujocoUR5Robotiq85fEnvFromObjConfigList,
+    MujocoFR5Robotiq85fEnvFromObjConfigList
 )
-from scalingup.environment.mujoco.table_top import TableTopMujocoEnv, TableTopRobotiq85MujocoEnv
+from scalingup.environment.mujoco.table_top import (
+    TableTopMujocoEnv,
+    TableTopRobotiq85MujocoEnv, 
+    TableTopFR5Robotiq85MujocoEnv
+)
 from scalingup.environment.mujoco.utils import MujocoObjectInstanceConfig
 from scalingup.utils.core import (
     DegreeOfFreedomRange,
@@ -24,4 +29,7 @@ class TableTopPickAndPlace(TableTopMujocoEnv, MujocoUR5EnvFromObjConfigList):
     pass
 
 class TableTopPickAndPlaceRobotiq85(TableTopRobotiq85MujocoEnv, MujocoUR5Robotiq85fEnvFromObjConfigList):
+    pass
+
+class TableTopPickAndPlaceFR5Robotiq85(TableTopFR5Robotiq85MujocoEnv, MujocoFR5Robotiq85fEnvFromObjConfigList):
     pass

@@ -4,8 +4,9 @@ defaults:
 sampler_config:
   max_time: 100 # in seconds
 env:
-  _target_: scalingup.environment.mujoco.bin_grasping.TableTopBinGraspingMujocoEnv
+  # _target_: scalingup.environment.mujoco.bin_grasping.TableTopBinGraspingMujocoEnv
   # _target_: scalingup.environment.mujoco.bin_grasping.TableTopBinGraspingRobotiq85MujocoEnv
+  _target_: scalingup.environment.mujoco.bin_grasping.TableTopBinGraspingFR5Robotiq85MujocoEnv
   bin_x_offset: 0.0
   min_bin_y_dist: 0.22
   max_bin_y_dist: 0.24
