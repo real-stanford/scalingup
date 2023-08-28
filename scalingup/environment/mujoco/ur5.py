@@ -136,8 +136,8 @@ class UR5Robotiq(UR5):
         end_effector_links = filter(
             # lambda body: "robotiq_right_finger" in body.name
             # or "robotiq_left_finger" in body.name,
-            lambda body: "right_driver" in body.name
-            or "left_driver" in body.name,
+            lambda body: "right_pad" in body.name
+            or "left_pad" in body.name,
             map(mj_physics.model.body, range(mj_physics.model.nbody)),
         )
         gripper_link_paths = [
@@ -170,8 +170,8 @@ class UR5Robotiq(UR5):
     @property
     def ee_link_names(self) -> List[str]:
         return [
-            "base",
             "base_mount",
+            "base",
             "right_driver",
             "right_coupler",
             "right_spring_link",

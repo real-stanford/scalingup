@@ -16,8 +16,8 @@ if __name__ == "__main__":
     env.num_setup_variations = 1
     # view = "ur5e/wsg50/d435i/rgb"
     # view = "ur5e/robotiq_2f85/d435i/rgb"
-    view = "fr5/wsg50/d435i/rgb"
-    # view = "fr5/robotiq_2f85/d435i/rgb"
+    # view = "fr5/wsg50/d435i/rgb"
+    view = "fr5/robotiq_2f85/d435i/rgb"
     # view = "top_down"
     # view = "front"
     images = [env.reset(episode_id=i).images[view].rgb for i in range(9)]

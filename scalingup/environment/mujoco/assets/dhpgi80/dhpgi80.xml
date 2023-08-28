@@ -1,0 +1,59 @@
+<mujoco model="dhpgi80">
+    <compiler angle="radian" autolimits="true" />
+    <option impratio="10" cone="elliptic" />
+    <!-- https://mujoco.readthedocs.io/en/stable/XMLreference.html?highlight=elliptic#option use
+    elliptic cones for more realism -->
+    <default>
+        <default class="visual">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="collision">
+            <geom type="mesh" group="3" />
+        </default>
+        <default class="finger_collision">
+            <geom condim="6" friction="0.9 0.1 0.1" group="3" priority="1" />
+        </default>
+    </default>
+
+    <asset>
+        <material name="metal" rgba="0.6 0.6 0.6 1" reflectance="1" />
+        <material name="finger" rgba="0.149 0.149 0.149 1" reflectance="1" />
+        <mesh name="base" file="meshes/base.stl" />
+        <mesh name="finger" file="meshes/finger.stl" />
+    </asset>
+    <worldbody>
+        <body name="base">
+            <site name="cam_mount" size="0.001" group="2"
+                pos="0.065 0.0 -0.01" />
+
+            <geom mesh="base" type="mesh" class="visual" mass="0.5" material="metal"
+                pos="0 0 0.007" />
+            <geom size="0.095 0.062 0.093" type="box" class="collision" pos="0 0 0.0465" />
+
+            <body name="right_finger" pos="0 0 0" euler="0 0 3.141592653">
+                <joint name="right_driver_joint" range="0.00 0.038" damping="20"
+                    type="slide" axis="-1 0 0" />
+                <geom mesh="finger" type="mesh" class="visual" mass="0.1" material="finger" />
+                <geom mesh="finger" type="mesh" class="finger_collision" />
+            </body>
+            <body name="left_finger" pos="0 0 0" euler="0 0 0">
+                <joint name="left_driver_joint" range="0.00 0.038" damping="20"
+                    type="slide" axis="1 0 0" />
+                <geom mesh="finger" type="mesh" class="visual" mass="0.1" material="finray_material" />
+                <geom mesh="finger" type="mesh" class="finger_collision" />
+            </body>
+            <site name="end_effector" group="3" pos="0 0 0.180" />
+        </body>
+    </worldbody>
+
+    <equality>
+        <joint joint1="right_driver_joint" joint2="left_driver_joint"
+            solimp="0.8 0.85 0.001" solref="0.005 1" />
+    </equality>
+
+    <actuator>
+        <position name="gripper" kp="2000" forcerange="-80 80" ctrlrange="0 0.04"
+            joint="right_driver_joint" />
+    </actuator>
+</mujoco>
+    
