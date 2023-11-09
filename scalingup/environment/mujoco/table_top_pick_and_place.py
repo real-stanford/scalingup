@@ -3,7 +3,6 @@ import numpy as np
 from dm_control import mjcf
 from dm_control.mjcf import RootElement
 from scalingup.environment.mujoco.mujocoEnv import (
-    DynamicMujocoUR5Env,
     MujocoUR5EnvFromObjConfigList,
 )
 from scalingup.environment.mujoco.table_top import TableTopMujocoEnv
