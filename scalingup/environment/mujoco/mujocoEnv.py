@@ -24,6 +24,7 @@ from scalingup.algo.virtual_grid import Point3D
 from scalingup.environment.mujoco.mujocoRobot import MujocoRobot
 from scalingup.environment.mujoco.rrt import MujocoRRT
 from scalingup.environment.mujoco.ur5 import UR5, UR5Robotiq, UR5WSG50Finray
+from scalingup.environment.mujoco.fr5 import FR5, FR5Robotiq
 from scalingup.environment.mujoco.utils import (
     MujocoObjectInstanceConfig,
     get_body_aabbs,
