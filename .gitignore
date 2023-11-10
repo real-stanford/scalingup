@@ -128,9 +128,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-/scalingup/dtd
-/scalingup/responses
-/outputs
-env.sh
-*.mp4

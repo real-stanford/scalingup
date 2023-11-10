@@ -11,10 +11,8 @@ discretizer: null
 obs_cameras:
  - front
  - top_down
-#  - fr5/wsg50/d435i/rgb
- - fr5/robotiq_2f85/d435i/rgb
-#  - ur5e/wsg50/d435i/rgb
-#  - ur5e/robotiq_2f85/d435i/rgb
+ - ur5e/wsg50/d435i/rgb
+ # - fr5/robotiq_2f85/d435i/rgb
 main_cam: front # this is used in visibility checker
 obs_dim:
   - 160

@@ -62,8 +62,8 @@ This will automatically create directory under under `scalingup/wandb/` for stor
 The codebase supports domain randomization at data generation time.
 To enable it, add `env/domain_rand_config=all`.
 For example,
-```
-python scalingup/inference.py evaluation.num_episodes=50000 policy=scalingup evaluation=drawer env/domain_rand_config=all
+```sh
+python scalingup/inference.py evaluation.num_episodes=50000 policy=scalingup evaluation=drawer env/domain_rand_config=all env.domain_rand_config.dtd_root=/home/mo/scalingup/dtd/ # `mo` is my dog's name 🐕
 ```
 
 After [running data generation](#data-generation), you can run training using the following command

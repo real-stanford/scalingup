@@ -346,7 +346,7 @@ class SingleEnvSimEvaluation(SimEvaluation):
             )
         if self.remote:
             if not ray.is_initialized():
-                ray.init(log_to_driver=True, local_mode=False)
+                ray.init(log_to_driver=False, local_mode=False)
             sampler_cls = ray.remote(EnvSampler).options(max_restarts=10)
             env_handle = ray.put(self.env)
             env_samplers = [

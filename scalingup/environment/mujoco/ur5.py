@@ -134,10 +134,8 @@ class UR5Robotiq(UR5):
         prefix: str = "",
     ):
         end_effector_links = filter(
-            # lambda body: "robotiq_right_finger" in body.name
-            # or "robotiq_left_finger" in body.name,
-            lambda body: "right_pad" in body.name
-            or "left_pad" in body.name,
+            lambda body: "robotiq_right_finger" in body.name
+            or "robotiq_left_finger" in body.name,
             map(mj_physics.model.body, range(mj_physics.model.nbody)),
         )
         gripper_link_paths = [
@@ -149,8 +147,8 @@ class UR5Robotiq(UR5):
             prefix=prefix,
             bodyid=bodyid,
             gripper_link_paths=gripper_link_paths,
-            gripper_joint_name="robotiq_2f85/right_driver_joint",
-            gripper_actuator_name="robotiq_2f85/fingers_actuator",
+            gripper_joint_name="right_driver_joint",
+            gripper_actuator_name="fingers_actuator",
         )
 
     @property
@@ -161,7 +159,7 @@ class UR5Robotiq(UR5):
 
     @property
     def gripper_close_ctrl_val(self) -> float:
-        return 255.0    #TODO: what is this value?
+        return 255.0
 
     @property
     def gripper_open_ctrl_val(self) -> float:
@@ -170,43 +168,20 @@ class UR5Robotiq(UR5):
     @property
     def ee_link_names(self) -> List[str]:
         return [
-            "base_mount",
-            "base",
+            "Robotiq 2f85",
+            "robotiq_base",
             "right_driver",
             "right_coupler",
             "right_spring_link",
             "right_follower",
-            "right_pad",
+            "robotiq_right_finger",
             "right_silicone_pad",
             "left_driver",
             "left_coupler",
             "left_spring_link",
             "left_follower",
-            "left_pad",
+            "robotiq_left_finger",
             "left_silicone_pad",
-        ]
-    
-    @property
-    def end_effector_site_name(self) -> str:
-        # TODO make sure self.prefix is frozen
-        return os.path.join(self.prefix, "robotiq_2f85", "end_effector")
-
-    @property
-    def end_effector_rest_orientation(self) -> np.ndarray:
-        return euler.euler2quat(np.pi, 0, -np.pi / 2)   #TODO: what is this value?
-
-    @property
-    def end_effector_links(self) -> List[Any]:
-        return [
-            self.mj_physics.model.body(os.path.join(self.prefix, "robotiq_2f85", link_name))
-            for link_name in self.ee_link_names
-        ]
-
-    @property
-    def ee_link_paths(self) -> List[str]:
-        return [
-            os.path.join(self.prefix, "robotiq_2f85", link_name)
-            for link_name in self.ee_link_names
         ]
 
 

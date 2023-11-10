@@ -23,8 +23,7 @@ from scalingup.utils.core import EnvSamplerConfig
 import dataclasses
 
 rank_idx = os.environ.get("NODE_RANK", 0)
-# torch.cuda.empty_cache()
-# os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+
 torch.multiprocessing.set_sharing_strategy("file_system")
 
 

@@ -193,7 +193,7 @@ class FR5Robotiq(FR5):
 
     @property
     def end_effector_rest_orientation(self) -> np.ndarray:
-        return euler.euler2quat(np.pi, 0, -np.pi / 2)   #TODO: what is this value?
+        return euler.euler2quat(np.pi, 0, 0)   #TODO: what is this value?
 
     @property
     def end_effector_links(self) -> List[Any]:
@@ -338,7 +338,7 @@ class FR5DHPGI80(FR5):
 
     @property
     def gripper_open_ctrl_val(self) -> float:
-        return 0.04
+        return 0.05
 
     @property
     def ee_link_names(self) -> List[str]:
