@@ -2,7 +2,7 @@ from typing import List
 import numpy as np
 from dm_control import mjcf
 from dm_control.mjcf import RootElement
-from scalingup.environment.mujoco.table_top import TableTopMujocoEnv
+from scalingup.environment.mujoco.table_top import TableTopMujocoEnv, TableTopFR5Robotiq85MujocoEnv
 from scalingup.utils.constants import LINK_SEPARATOR_TOKEN, MJCF_NEST_TOKEN
 from scalingup.utils.core import (
     DegreeOfFreedomRange,
@@ -152,7 +152,7 @@ class TableTopBinGraspingMujocoEnv(TableTopMujocoEnv):
             },
             threshold=0.5,
         )
-    
+
 
 class TableTopBinGraspingFR5Robotiq85MujocoEnv(TableTopFR5Robotiq85MujocoEnv):
     def __init__(

@@ -161,7 +161,7 @@ class FR5Robotiq(FR5):
 
     @property
     def gripper_close_ctrl_val(self) -> float:
-        return 255.0    #TODO: what is this value?
+        return 255.0
 
     @property
     def gripper_open_ctrl_val(self) -> float:
@@ -185,7 +185,7 @@ class FR5Robotiq(FR5):
             "left_pad",
             "left_silicone_pad",
         ]
-    
+
     @property
     def end_effector_site_name(self) -> str:
         # TODO make sure self.prefix is frozen
@@ -193,7 +193,7 @@ class FR5Robotiq(FR5):
 
     @property
     def end_effector_rest_orientation(self) -> np.ndarray:
-        return euler.euler2quat(np.pi, 0, 0)   #TODO: what is this value?
+        return euler.euler2quat(np.pi, 0, 0)
 
     @property
     def end_effector_links(self) -> List[Any]:
@@ -289,7 +289,7 @@ class FR5WSG50Finray(FR5):
             os.path.join(self.prefix, "wsg50", link_name)
             for link_name in self.ee_link_names
         ]
-    
+
 
 class FR5DHPGI80(FR5):
     def __init__(
@@ -370,4 +370,3 @@ class FR5DHPGI80(FR5):
             os.path.join(self.prefix, "dhpgi80", link_name)
             for link_name in self.ee_link_names
         ]
-    

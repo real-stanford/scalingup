@@ -25,5 +25,6 @@ from scalingup.utils.state_api import check_on_top_of
 class TableTopPickAndPlace(TableTopMujocoEnv, MujocoUR5EnvFromObjConfigList):
     pass
 
+
 class TableTopPickAndPlaceFR5Robotiq85(TableTopFR5Robotiq85MujocoEnv, MujocoFR5Robotiq85fEnvFromObjConfigList):
     pass
