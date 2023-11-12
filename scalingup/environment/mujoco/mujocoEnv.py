@@ -880,7 +880,6 @@ class MujocoFR5Env(MujocoEnv):
                 orientation=euler.euler2quat(*init_ee_euler),
             )
         )
-        print(">>>>>>> fr5_jnt_values:", np.degrees(joint_values))
         assert joint_values is not None
         self.robot_init_joint_pos: np.ndarray = joint_values
         self.robot_init_ctrl: ControlAction
@@ -1136,7 +1135,7 @@ class MujocoFR5Robotiq85fEnv(MujocoFR5Env):
             robot_scene_model.worldbody.all_children()[0].name,  # type: ignore
         )
         return world_model, robot_root_link_name
-    
+
 
 class MujocoUR5EnvFromObjConfigList(MujocoUR5WSG50FinrayEnv):
     def __init__(self, obj_instance_configs: List[MujocoObjectInstanceConfig], **kwargs):

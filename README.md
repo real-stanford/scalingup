@@ -98,8 +98,4 @@ The views and conclusions contained herein are those of the authors and should n
  - [Mujoco Menagerie](https://github.com/deepmind/mujoco_menagerie): UR5 and RealSense models were modified from their models.
  - [Mujoco Scanned Objects](https://github.com/kevinzakka/mujoco_scanned_objects): Big shout out to [Kevin Zakka](https://kzakka.com/) for all his amazing open-source work, go give him a few stars ⭐
  - [3D UNet Implementation](https://github.com/wolny/pytorch-3dunet/) modified from [Adrian Wolny](https://adrianwolny.com/)'s implementation.
-
-
-## Coming Soon
-
- - **Data + Checkpoint Downloads**: For now, you can still run data generation and training! 
+ - Support for [Fair Innovation FR5](https://robodk.com/robot/FAIR-Innovation/FR5) with the [Robotiq 852F](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) and [Weiss WSG50](https://weiss-robotics.com/servo-electric/wsg-series/) was [contributed](https://github.com/real-stanford/scalingup/pull/18) by [Yan Wang](https://wangyan-hlab.github.io/)! Go give him a few stars as well!

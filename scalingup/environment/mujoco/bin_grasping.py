@@ -2,17 +2,17 @@ from typing import List
 import numpy as np
 from dm_control import mjcf
 from dm_control.mjcf import RootElement
-from scalingup.environment.mujoco.table_top import TableTopMujocoEnv, TableTopFR5Robotiq85MujocoEnv
+from scalingup.environment.mujoco.table_top import (
+    TableTopMujocoEnv,
+    TableTopFR5Robotiq85MujocoEnv,
+)
 from scalingup.utils.constants import LINK_SEPARATOR_TOKEN, MJCF_NEST_TOKEN
 from scalingup.utils.core import (
     DegreeOfFreedomRange,
-    EnvState,
     Observation,
     QPosRange,
-    Task,
-    Trajectory,
 )
-from scalingup.utils.state_api import check_inside, check_on_top_of
+from scalingup.utils.state_api import check_on_top_of
 
 
 class TableTopBinGraspingMujocoEnv(TableTopMujocoEnv):

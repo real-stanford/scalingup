@@ -8,7 +8,6 @@ from dm_control import mujoco
 from transforms3d import euler
 from scalingup.environment.mujoco.mujocoRobot import MujocoRobot
 from scalingup.environment.mujoco.utils import get_part_path
-from scalingup.utils.core import EndEffectorAction, ControlConfig
 
 
 class FR5(MujocoRobot):
@@ -136,8 +135,7 @@ class FR5Robotiq(FR5):
         end_effector_links = filter(
             # lambda body: "robotiq_right_finger" in body.name
             # or "robotiq_left_finger" in body.name,
-            lambda body: "right_pad" in body.name
-            or "left_pad" in body.name,
+            lambda body: "right_pad" in body.name or "left_pad" in body.name,
             map(mj_physics.model.body, range(mj_physics.model.nbody)),
         )
         gripper_link_paths = [
@@ -198,7 +196,9 @@ class FR5Robotiq(FR5):
     @property
     def end_effector_links(self) -> List[Any]:
         return [
-            self.mj_physics.model.body(os.path.join(self.prefix, "robotiq_2f85", link_name))
+            self.mj_physics.model.body(
+                os.path.join(self.prefix, "robotiq_2f85", link_name)
+            )
             for link_name in self.ee_link_names
         ]
 

@@ -22,6 +22,8 @@ Make sure you correctly define `end_effector_links`, and correctly define the co
 They are used in `get_grasped_obj_id` to check for grasp success.
 You may also need to tune `ee_action_num_grip_steps` in `EnvConfig` so that the grasp checker results are correct.
 
+For example, [Yan Wang](https://wangyan-hlab.github.io/) has [contributed code](https://github.com/wangyan-hlab/scalingup/tree/pull_request) for supporting the [Fair Innovation FR5](https://robodk.com/robot/FAIR-Innovation/FR5) with the [Robotiq 852F](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) and [Weiss WSG50](https://weiss-robotics.com/servo-electric/wsg-series/). Thank you Yan!
+
 ## Assets 🪑
 
 In creating the benchmark, I use:
