@@ -18,6 +18,10 @@ The UR5 and RealSense models were modified from their models, and there are so m
 If you are only interested in using a different gripper, you can checkout `UR5WSG50Finray` and `UR5Robotiq` to see how to handle robot control.
 Meanwhile, the models need to be added in the environment class, and you can check out `MujocoUR5WSG50FinrayEnv` and `MujocoUR5Robotiq85fEnv` to see how to handle dynamic imports of robot grippers.
 
+Make sure you correctly define `end_effector_links`, and correctly define the collision mesh for your end effector links.
+They are used in `get_grasped_obj_id` to check for grasp success.
+You may also need to tune `ee_action_num_grip_steps` in `EnvConfig` so that the grasp checker results are correct.
+
 ## Assets 🪑
 
 In creating the benchmark, I use:

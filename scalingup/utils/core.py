@@ -4263,6 +4263,57 @@ class EnvSampler:
 
 @dataclasses.dataclass
 class EnvConfig:
+    """
+    # Distilled Policy Observation
+    `obs_cameras` are the names of cameras (from the scene xml) to render for
+    the distilled policy's visual observations. `obs_dim` is the visual
+    observation resolution. If you're not sure exactly which cameras and which
+    resolutions to use, you can render more views and at a higher resolution
+    than is necessary at data generation, and then select the views you
+    want/downsample the images later, at the cost of using more disk space.
+
+    # Scaling Up Sampled-based Planner Configurations
+    `settle_time_after_dropped_obj` is the time to wait after a grasped object is
+    dropped before reacting. This **needs** to be non-zero. If the data generation
+    policy reacts too quickly, then the distilled policy (which has a lower control
+    frequency) may not be able to replicate the data generation policy's recovery.
+
+    `ee_action_num_grip_steps` is the number of simulation steps to wait after
+    a closed-gripper command is sent, used to check whether the fingers will touch
+    any object once it closes its gripper. See `EndEffectorAction` for implementation
+    details.
+
+    `num_action_candidates` is the number of candidate actions to sample for each
+    action primitive. For example, if the action primitive is `GraspLinkPoseAction`,
+    then `num_action_candidates` is the number of candidate grasps to sample.
+
+    `max_pushin_dist` and `min_pushin_dist` is used in the grasp sampler to sample a
+    random pre-grasp distance.
+
+    `num_steps_multiplier`, `min_steps`, `rotate_gripper_threshold` determines how
+    to discretize a continuous revolute joint action.
+
+    `solve_ee_inplace` was implemented as a performance improvement, based on my
+    profiling results which showed that copying the simulation's data was a very
+    expensive procedure in IK calculation. However, if you don't make a copy, then
+    IK will change your simulation state.
+
+    `pointing_up_normal_threshold` is used to filter for surfaces which are level
+    enough for a placement.
+
+    `place_height_min`, `place_height_max`, `preplace_dist_min`, and
+    `preplace_dist_max` controls the range of the placing and pre-placing height.
+
+    `fallback_on_rrt_fail` decides whether failed RRT calls should just halt or attempt
+    simple linear interpolation motion plan.
+
+    `end_on_failed_execution` decides whether the entire episode (up the entire task
+    hierarchy) should end when one action call fails.
+
+    `grasp_primitive_z_pushin` and `grasp_primitive_z_backup` controls the 2D top-down
+    grasping primitive's grasp and pre-grasp distances.
+    """
+
     obs_cameras: List[str]
     obs_dim: Tuple[int, int]
     ctrl: ControlConfig
@@ -4288,7 +4339,7 @@ class EnvConfig:
     fallback_on_rrt_fail: bool = False
     # move end effector action options
     end_on_failed_execution: bool = True
-    # action primitives
+    # grasp action
     grasp_primitive_z_pushin: float = 0.02
     grasp_primitive_z_backup: float = 0.2
 
