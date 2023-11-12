@@ -6,6 +6,7 @@ sampler_config:
 
 env:
   _target_: scalingup.environment.mujoco.table_top_pick_and_place.TableTopPickAndPlace
+  # _target_: scalingup.environment.mujoco.table_top_pick_and_place.TableTopPickAndPlaceFR5Robotiq85
   obj_instance_configs: []
 
 task_sampler:

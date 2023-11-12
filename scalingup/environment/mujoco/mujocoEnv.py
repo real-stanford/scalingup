@@ -24,6 +24,7 @@ from scalingup.algo.virtual_grid import Point3D
 from scalingup.environment.mujoco.mujocoRobot import MujocoRobot
 from scalingup.environment.mujoco.rrt import MujocoRRT
 from scalingup.environment.mujoco.ur5 import UR5, UR5Robotiq, UR5WSG50Finray
+from scalingup.environment.mujoco.fr5 import FR5, FR5Robotiq
 from scalingup.environment.mujoco.utils import (
     MujocoObjectInstanceConfig,
     get_body_aabbs,
@@ -859,6 +860,150 @@ class MujocoUR5Env(MujocoEnv):
         self.mj_physics.data.qpos[obj_qpos_indices] = obj_qpos
 
 
+class MujocoFR5Env(MujocoEnv):
+    def __init__(
+        self,
+        robot_cls: Type[FR5],
+        num_setup_variations: Optional[int] = None,
+        num_pose_variations: Optional[int] = None,
+        ground_xml_path: str = "scalingup/environment/mujoco/assets/ground.xml",
+        init_ee_pos: Tuple[float, float, float] = (0.21, 0, 0.3),
+        init_ee_euler: Tuple[float, float, float] = (0, 0, 0),
+        **kwargs,
+    ):
+        self.ground_xml_path = ground_xml_path
+        super().__init__(robot_cls=robot_cls, **kwargs)
+        assert len(self.obj_qpos_indices) == len(self.obj_qpos_ranges)
+        joint_values = self.robot.inverse_kinematics(
+            pose=Pose(
+                position=np.array(init_ee_pos),
+                orientation=euler.euler2quat(*init_ee_euler),
+            )
+        )
+        print(">>>>>>> fr5_jnt_values:", np.degrees(joint_values))
+        assert joint_values is not None
+        self.robot_init_joint_pos: np.ndarray = joint_values
+        self.robot_init_ctrl: ControlAction
+        if self.config.ctrl.control_type == ControlType.JOINT:
+            # also add gripper control
+            self.robot_init_ctrl = ControlAction(
+                value=np.stack(
+                    [
+                        np.concatenate(
+                            [joint_values, [self.fr5.gripper_open_ctrl_val]], axis=0
+                        )
+                    ]
+                ),
+                timestamps=np.array([0.0]),
+                config=self.config.ctrl,
+            )
+        else:
+            assert self.config.ctrl.control_type == ControlType.END_EFFECTOR
+            if self.config.ctrl.rotation_type == RotationType.QUATERNION:
+                init_ee_orn = euler.euler2quat(*init_ee_euler)
+            elif self.config.ctrl.rotation_type == RotationType.ROT_MAT:
+                init_ee_orn = euler.euler2mat(*init_ee_euler).reshape(-1)
+            elif self.config.ctrl.rotation_type == RotationType.UPPER_ROT_MAT:
+                init_ee_orn = euler.euler2mat(*init_ee_euler)[:2].reshape(-1)
+            else:
+                raise NotImplementedError
+            ctrl_val = np.concatenate(
+                [init_ee_pos, init_ee_orn, [self.fr5.gripper_open_ctrl_val]],
+                axis=0,
+            )
+            self.robot_init_ctrl = ControlAction(
+                value=np.stack([ctrl_val]),
+                timestamps=np.array([0.0]),
+                config=self.config.ctrl,
+                target_ee_actions=[
+                    EndEffectorAction(
+                        end_effector_position=np.array(init_ee_pos),
+                        end_effector_orientation=euler.euler2quat(*init_ee_euler),
+                        gripper_command=False,  # open
+                        allow_contact=True,
+                    )
+                ],
+            )
+
+    @property
+    def fr5(self) -> FR5:
+        assert issubclass(type(self.robot), FR5)
+        return typing.cast(FR5, self.robot)
+
+    def joint_pos_control_to_ee_pose_control(
+        self, target_ctrl_val: np.ndarray
+    ) -> Tuple[np.ndarray, np.ndarray, float]:
+        non_gripper_joint_pos = target_ctrl_val[:6]
+        gripper_joint_pos = target_ctrl_val[6]
+        ee_pose = self.mujoco_robot.forward_kinematics(
+            joints=non_gripper_joint_pos, return_ee_pose=True
+        )
+        assert ee_pose is not None
+        return ee_pose.position, ee_pose.orientation, gripper_joint_pos
+
+    def randomize_ctrl(self):
+        self.control_buffer = deepcopy(self.robot_init_ctrl)
+
+    @property
+    def robot_qpos_indices(self) -> List[int]:
+        return sorted(
+            sum(
+                (
+                    list(
+                        np.arange(
+                            joint.qposadr[0],
+                            joint.qposadr[0] + (6 if joint.type[0] == 0 else 1),
+                        )
+                    )
+                    for joint in filter(
+                        lambda joint: self.mj_physics.model.body(
+                            joint.bodyid[0]
+                        ).name.startswith(self.robot_model_name),
+                        self.joints,
+                    )
+                ),
+                [],
+            )
+        )
+
+    @property
+    def obj_qpos_indices(self) -> List[int]:
+        return sorted(
+            sum(
+                (
+                    list(
+                        np.arange(
+                            joint.qposadr[0],
+                            joint.qposadr[0] + (6 if joint.type[0] == 0 else 1),
+                        )
+                    )
+                    # all the joints whose name don't start with robot name
+                    # belong to the object
+                    for joint in filter(
+                        lambda joint: not self.mj_physics.model.body(
+                            joint.bodyid[0]
+                        ).name.startswith(self.robot_model_name),
+                        self.joints,
+                    )
+                ),
+                [],
+            )
+        )
+
+    def randomize(self):
+        # NOTE assume that the first `len(self.robot_init_joint_pos)`
+        # joints are the robot joints
+        self.mj_physics.data.qpos[
+            self.robot_qpos_indices[: len(self.robot_init_joint_pos)]
+        ] = self.robot_init_joint_pos
+        obj_qpos_indices = self.obj_qpos_indices
+        obj_qpos = [
+            self.pose_numpy_random.uniform(qpos_range.lower, qpos_range.upper)
+            for qpos_range in self.obj_qpos_ranges
+        ]
+        self.mj_physics.data.qpos[obj_qpos_indices] = obj_qpos
+
+
 class MujocoUR5WSG50FinrayEnv(MujocoUR5Env):
     def __init__(
         self,
@@ -940,7 +1085,130 @@ class MujocoUR5Robotiq85fEnv(MujocoUR5Env):
         return world_model, robot_root_link_name
 
 
+class MujocoFR5Robotiq85fEnv(MujocoFR5Env):
+    def __init__(
+        self,
+        # num_setup_variations: Optional[int] = None,
+        # num_pose_variations: Optional[int] = None,
+        **kwargs,
+    ):
+        # self.num_setup_variations = num_setup_variations
+        # self.num_pose_variations = num_pose_variations
+        # self.episode_id = 0
+        super().__init__(
+            robot_cls=FR5Robotiq,
+            # num_setup_variations=num_setup_variations,
+            # num_pose_variations=num_pose_variations,
+            **kwargs,
+        )
+        assert len(self.obj_qpos_indices) == len(self.obj_qpos_ranges)
+
+    def setup_model(self) -> Tuple[RootElement, str]:
+        # load world scene
+        world_model = mjcf.from_path(self.ground_xml_path)
+
+        # load robot scene
+        robot_scene_model = mjcf.from_path(
+            "scalingup/environment/mujoco/assets/menagerie/fr_robots_fr5/fr5.xml",
+        )
+
+        del robot_scene_model.keyframe
+        robot_scene_model.worldbody.light.clear()
+        attachment_site = robot_scene_model.find("site", "attachment_site")
+        assert attachment_site is not None
+        gripper = mjcf.from_path(
+            "scalingup/environment/mujoco/assets/menagerie/robotiq_2f85/2f85.xml",
+        )
+
+        cam_mount_site = gripper.find("site", "cam_mount")
+        cam = mjcf.from_path(
+            "scalingup/environment/mujoco/assets/menagerie/realsense_d435i/d435i_with_cam.xml"
+        )
+        cam_mount_site.attach(cam)
+
+        attachment_site.attach(gripper)
+
+        self.robot_model_name = robot_scene_model.model
+        world_model.attach(robot_scene_model)
+
+        robot_root_link_name = os.path.join(
+            self.robot_model_name,
+            robot_scene_model.worldbody.all_children()[0].name,  # type: ignore
+        )
+        return world_model, robot_root_link_name
+    
+
 class MujocoUR5EnvFromObjConfigList(MujocoUR5WSG50FinrayEnv):
+    def __init__(self, obj_instance_configs: List[MujocoObjectInstanceConfig], **kwargs):
+        self.obj_instance_configs = obj_instance_configs
+        super().__init__(**kwargs)
+
+    def setup_objs(self, world_model: RootElement) -> QPosRange:
+        # load objects
+        self.assert_visible_objs_at_reset = set()
+        obj_qpos_ranges = super().setup_objs(world_model=world_model)
+        for obj_instance_config in self.obj_instance_configs:
+            obj_model = mjcf.from_path(obj_instance_config.asset_path)
+            if obj_instance_config.name is not None:
+                obj_model = self.rename_model(
+                    model=obj_model, name=obj_instance_config.name
+                )
+
+            if obj_instance_config.color_config is not None:
+                obj_class = obj_instance_config.obj_class
+                color_name = obj_instance_config.color_config.name
+                obj_model.model = f"{color_name}_{obj_class}"
+                assert len(obj_model.find_all("body")) == 1
+                obj_model.find_all("body")[0].name = f"{color_name}_{obj_class}"
+                # add material node to change color
+                material_name = f"{color_name}_{obj_class}"
+                obj_model.asset.add(
+                    "material",
+                    name=material_name,
+                    rgba=(*obj_instance_config.color_config.rgb, 1),
+                )
+                for geom in obj_model.find_all("geom"):
+                    geom.material = material_name
+
+            self.add_obj_from_model(
+                obj_model=obj_model,
+                world_model=world_model,
+                position=obj_instance_config.position,
+                euler=obj_instance_config.euler,
+                add_free_joint=obj_instance_config.add_free_joint,
+            )
+            obj_qpos_ranges.extend(
+                obj_instance_config.qpos_range
+                if obj_instance_config.qpos_range is not None
+                else (
+                    DegreeOfFreedomRange(lower=lower, upper=upper)
+                    for lower, upper in [
+                        # 3D position
+                        (0.4, 0.5),
+                        (-0.05, 0.05),
+                        (0.1, 0.2),
+                        # euler rotation
+                        (-np.pi, np.pi),
+                        (-np.pi, np.pi),
+                        (-np.pi, np.pi),
+                    ]
+                )
+            )
+            part_path = "".join(
+                [
+                    obj_model.model,
+                    MJCF_NEST_TOKEN,
+                    LINK_SEPARATOR_TOKEN,
+                    obj_model.model,
+                    MJCF_NEST_TOKEN,
+                    obj_model.model,
+                ],
+            )
+            self.assert_visible_objs_at_reset.add(part_path)
+        return obj_qpos_ranges
+
+
+class MujocoFR5Robotiq85fEnvFromObjConfigList(MujocoFR5Robotiq85fEnv):
     def __init__(self, obj_instance_configs: List[MujocoObjectInstanceConfig], **kwargs):
         self.obj_instance_configs = obj_instance_configs
         super().__init__(**kwargs)

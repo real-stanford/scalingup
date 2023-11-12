@@ -1,0 +1,112 @@
+<mujoco model="fr5">
+  <compiler angle="radian" meshdir="assets" autolimits="true" />
+
+  <option integrator="implicitfast" />
+
+  <default>
+    <default class="fr5">
+      <material specular="0.5" shininess="0.25" />
+      <joint axis="0 0 1" range="-6.28319 6.28319" armature="0.1" />
+      <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="2000"
+        biasprm="0 -2000 -400"
+        forcerange="-150 150" />
+      <default class="size1">
+        <joint range="-3.0543 3.0543" />
+        <general ctrlrange="-3.0543 3.0543" />
+        <default class="size1_wrist">
+          <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28" />
+        </default>
+      </default>
+      <default class="size2">
+        <joint range="-4.6251 1.4835" />
+        <general ctrlrange="-4.6251 1.4835" />
+        <default class="size2_wrist">
+          <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28" />
+        </default>
+      </default>
+      <default class="size3">
+        <joint range="-2.7925 2.7925" />
+        <general ctrlrange="-2.7925 2.7925" />
+      </default>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="collision">
+        <geom type="mesh" group="3" />
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4" />
+    </default>
+  </default>
+
+  <asset>
+    <material class="fr5" name="gray" rgba="0.82 0.82 0.82 1" />
+    <material class="fr5" name="flangegray" rgba="0.6 0.6 0.6 1" />
+
+    <mesh file="fr5_base_link.obj" />
+    <mesh file="fr5_link1.obj" />
+    <mesh file="fr5_link2.obj" />
+    <mesh file="fr5_link3.obj" />
+    <mesh file="fr5_link4.obj" />
+    <mesh file="fr5_link5.obj" />
+    <mesh file="fr5_link6.obj" />
+  </asset>
+
+  <worldbody>
+    <light name="spotlight" mode="targetbodycom" target="wrist_2_link" pos="0 -1 2" />
+    <body name="base" quat="1 0 0 -1" childclass="fr5">
+      <inertial mass="1.6185" pos="0.00031896 0.00029673 0.042463" diaginertia="0.0030836 0.0030825 0.0045209" />
+      <geom mesh="fr5_base_link" material="gray" class="visual" />
+      <body name="shoulder_link" pos="0 0 0.152">
+        <inertial mass="4.64" pos="-0.00019 -0.00226 -0.01828" diaginertia="0.0093839 0.0093245 0.0077422" />
+        <joint name="shoulder_pan_joint" class="size1" axis="0 0 1" />
+        <geom mesh="fr5_link1" material="gray" class="visual" />
+        <geom mesh="fr5_link1" class="collision" />
+        <body name="upper_arm_link" pos="0 0 0" quat="1 1 0 0">
+          <inertial mass="10.08" pos="-0.2125 0 0.1212" diaginertia="0.020605 0.43899 0.43546" />
+          <joint name="shoulder_lift_joint" class="size2" axis="0 0 1" />
+          <geom mesh="fr5_link2" material="gray" class="visual" />
+          <geom mesh="fr5_link2" class="collision" />
+          <body name="forearm_link" pos="-0.425 0 0">
+            <inertial mass="2.71" pos="-0.27238 0.00017 0.01259" diaginertia="0.0035754 0.071483 0.071119" />
+            <joint name="elbow_joint" class="size3" axis="0 0 1" />
+            <geom mesh="fr5_link3" material="gray" class="visual" />
+            <geom mesh="fr5_link3" class="collision" />
+            <body name="wrist_1_link" pos="-0.395 0 0.102">
+              <inertial mass="1.56" pos="0 -0.01468 -0.00233" diaginertia="0.001626 0.0012553 0.0015802" />
+              <joint name="wrist_1_joint" class="size2_wrist" axis="0 0 1" />
+              <geom mesh="fr5_link4" material="gray" class="visual" />
+              <geom mesh="fr5_link4" class="collision"/>
+              <body name="wrist_2_link" pos="0 -0.102 0" quat="1 1 0 0">
+                <inertial mass="1.56" pos="0 0.01468 -0.00233" diaginertia="0.001626 0.0012553 0.0015802" />
+                <joint name="wrist_2_joint" class="size1_wrist" axis="0 0 1" />
+                <geom mesh="fr5_link5" material="gray" class="visual" />
+                <geom mesh="fr5_link5" class="collision" />
+                <body name="wrist_3_link" pos="0 0.1 0" quat="1 -1 0 0">
+                  <inertial mass="0.36" pos="0.00093 0.00081 -0.02005" diaginertia="0.00023009 0.00023049 0.0003593" />
+                  <joint name="wrist_3_joint" class="size1_wrist" axis="0 0 1" />
+                  <geom mesh="fr5_link6" material="flangegray" class="visual" />
+                  <geom mesh="fr5_link6" class="collision" />
+                  <site name="attachment_site" pos="0 0 0" quat="1 0 0 0" />
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <general class="size1" name="shoulder_pan" joint="shoulder_pan_joint" />
+    <general class="size2" name="shoulder_lift" joint="shoulder_lift_joint" />
+    <general class="size3" name="elbow" joint="elbow_joint" />
+    <general class="size2_wrist" name="wrist_1" joint="wrist_1_joint" />
+    <general class="size1_wrist" name="wrist_2" joint="wrist_2_joint" />
+    <general class="size1_wrist" name="wrist_3" joint="wrist_3_joint" />
+  </actuator>
+
+  <keyframe>
+    <key name="home" qpos="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0"
+      ctrl="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0" />
+  </keyframe>
+</mujoco>
