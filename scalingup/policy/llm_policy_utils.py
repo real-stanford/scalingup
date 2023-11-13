@@ -28,11 +28,9 @@ from scalingup.utils.core import (
 from pydantic import dataclasses
 from abc import ABC, abstractmethod
 
-
 @dataclasses.dataclass
 class LanguageStateEncoder:
     include_robot: bool = False
-    include_only_robot_ee_links: bool = True
     line_prefix: str = ""
     indent_str: str = "   "
     obj_bullet: str = " -"
@@ -47,47 +45,37 @@ class LanguageStateEncoder:
         for obj_name, obj_state in state.object_states.items():
             if obj_name == "world":
                 continue
-            if "ur5" in obj_name.lower() and not self.include_robot:
+            if state.robot_name in obj_name.lower() and not self.include_robot:
                 continue
             output += "\n"
             llm_obj_name = " ".join(obj_name.split("_")).split(MJCF_NEST_TOKEN)[0]
 
-            if "ur5" in obj_name.lower() and self.include_only_robot_ee_links:
-                # special case for handling robot
-                obj_name = "UR5"
-                link_paths = [
-                    f"UR5{LINK_SEPARATOR_TOKEN}robotiq_left_finger",
-                    f"UR5{LINK_SEPARATOR_TOKEN}robotiq_right_finger",
-                ]
-                context_name_to_link_path["robotiq left finger"] = link_paths[0]
-                context_name_to_link_path["robotiq right finger"] = link_paths[1]
-            else:
-                link_paths = list(obj_state.link_states.keys())
-                if obj_name[-1] != MJCF_NEST_TOKEN:
-                    raise NotImplementedError("Only support nested objects for now")
-                # nested as a result of using mjcf
-                link_paths = [
-                    "".join(link_name.split(obj_name)[2:])
-                    for link_name in link_paths
-                    if len("".join(link_name.split(obj_name)[2:])) > 0
-                ]
-                for link_path in link_paths:
-                    link_name = link_path.split(LINK_SEPARATOR_TOKEN)[-1]
-                    link_name = " ".join(link_name.split("_"))
-                    link_path = (
-                        obj_name
-                        + LINK_SEPARATOR_TOKEN
-                        + LINK_SEPARATOR_TOKEN.join(
-                            obj_name + sublink_path
-                            for sublink_path in link_path.split(LINK_SEPARATOR_TOKEN)
-                        )
+            link_paths = list(obj_state.link_states.keys())
+            if obj_name[-1] != MJCF_NEST_TOKEN:
+                raise NotImplementedError("Only support nested objects for now")
+            # nested as a result of using mjcf
+            link_paths = [
+                "".join(link_name.split(obj_name)[2:])
+                for link_name in link_paths
+                if len("".join(link_name.split(obj_name)[2:])) > 0
+            ]
+            for link_path in link_paths:
+                link_name = link_path.split(LINK_SEPARATOR_TOKEN)[-1]
+                link_name = " ".join(link_name.split("_"))
+                link_path = (
+                    obj_name
+                    + LINK_SEPARATOR_TOKEN
+                    + LINK_SEPARATOR_TOKEN.join(
+                        obj_name + sublink_path
+                        for sublink_path in link_path.split(LINK_SEPARATOR_TOKEN)
                     )
-                    assert link_name not in context_name_to_link_path
-                    context_name_to_link_path[link_name] = link_path
-                    if not link_name.startswith(obj_name):
-                        context_name_to_link_path[
-                            llm_obj_name + " " + link_name
-                        ] = link_path
+                )
+                assert link_name not in context_name_to_link_path
+                context_name_to_link_path[link_name] = link_path
+                if not link_name.startswith(obj_name):
+                    context_name_to_link_path[
+                        llm_obj_name + " " + link_name
+                    ] = link_path
 
             output += f"{self.obj_bullet} {llm_obj_name}"
             for link_path in link_paths:
