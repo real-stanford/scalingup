@@ -127,6 +127,12 @@ class PolicyTaskAction(SubtrajectoryAction):
 If `retry_until_success` is true, this action will run `policy` (which can be an list of actions, a diffusion policy, a language model policy, anything!) until `task` succeeds.
 By getting a language model to output the success condition for `task`, we get the core logic of Verify & Retry from our paper.
 
+
+> 💡 **Tip**
+> 
+> If you want to use a real-time GUI viewer, you can use MuJoCo's live viewer, as demonstrated in [`examples/hierachical_actions.py`](https://github.com/real-stanford/scalingup/blob/master/examples/hierachical_actions.py)
+> 
+
 ### Exploration Task Tree
 
 Our approach recursively predicts subtasks/actions (recall, they mean similar things in this codebase) and task success code snippets.

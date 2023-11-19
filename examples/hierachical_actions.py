@@ -7,14 +7,31 @@ from scalingup.utils.core import (
     PolicyTaskAction,
 )
 from scalingup.utils.generic import setup_logger
+from mujoco import viewer
 
 if __name__ == "__main__":
     setup_logger()
     """
     task sampler picks a random task in the domain, which is `catapult` in this case.
     env sampler runs an environment with a policy and task to generate a trajectory.
+
+    this script also demonstrates how to add a real time GUI viewer.
     """
     env, task_sampler, env_sampler_config = set_up_env("catapult")
+    # dm_control's data and model is a wrapper around MuJoCo's data and model
+    # so you have to call `.ptr` to get the underlying MuJoCo's data and model
+    viewer_handle = viewer.launch_passive(
+        env.mj_physics.model.ptr, env.mj_physics.data.ptr
+    )
+
+    # register the viewer sync callback to the environment
+    def sync_viewer(env):
+        viewer_handle.sync()
+
+    env.step_fn_callbacks["viewer_sync_callback"] = (
+        24,  # frames per second
+        sync_viewer,
+    )``
     env_sampler = EnvSampler(env=env, task_sampler=task_sampler)
     # `policy` could be a diffusion policy, a language model, or simply a list of actions
     # to be executed in an open loop manner
